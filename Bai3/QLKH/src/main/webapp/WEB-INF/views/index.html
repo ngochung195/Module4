@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{layout :: head}"></head>
+<body>
+    <header th:replace="~{layout :: header}"></header>
+
+    <main class="container">
+        <div class="card">
+            <div class="card-header">
+                <h2 class="card-title">Customers List</h2>
+                <a th:href="@{/customers/create}" class="btn btn-primary">+ Add New Customer</a>
+            </div>
+
+            <div th:if="${success}" class="alert-success" th:text="${success}"></div>
+
+            <div class="table-responsive">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Name</th>
+                            <th>Email</th>
+                            <th>Address</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr th:each="row,rowStat : ${customers}">
+                            <td th:text="${row.getId()}"></td>
+                            <td>
+                                <a th:href="@{/customers/{id}/view(id=${row.getId()})}" th:text="${row.getName()}" style="color: var(--primary); text-decoration: none; font-weight: 500;"></a>
+                            </td>
+                            <td th:text="${row.getEmail()}"></td>
+                            <td th:text="${row.getAddress()}"></td>
+                            <td>
+                                <a th:href="@{/customers/{id}/edit(id=${row.getId()})}" class="btn btn-secondary btn-sm">Edit</a>
+                                <a th:href="@{/customers/{id}/delete(id=${row.getId()})}" class="btn btn-danger btn-sm">Delete</a>
+                                <a th:href="@{/customers/{id}/view(id=${row.getId()})}" class="btn btn-secondary btn-sm">View</a>
+                            </td>
+                        </tr>
+                        <tr th:if="${#lists.isEmpty(customers)}">
+                            <td colspan="5" style="text-align: center; color: var(--text-muted);">No customers found.</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </main>
+
+    <footer th:replace="~{layout :: footer}"></footer>
+</body>
+</html>

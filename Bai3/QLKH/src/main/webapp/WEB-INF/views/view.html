@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{layout :: head}"></head>
+<body>
+    <header th:replace="~{layout :: header}"></header>
+
+    <main class="container">
+        <div class="card">
+            <div class="card-header">
+                <h2 class="card-title">Customer Details</h2>
+                <a th:href="@{/customers}" class="btn btn-secondary">Back to List</a>
+            </div>
+
+            <div class="detail-row">
+                <div class="detail-label">Customer ID</div>
+                <div class="detail-value" th:text="${customer.getId()}"></div>
+            </div>
+
+            <div class="detail-row">
+                <div class="detail-label">Full Name</div>
+                <div class="detail-value" th:text="${customer.getName()}"></div>
+            </div>
+
+            <div class="detail-row">
+                <div class="detail-label">Email</div>
+                <div class="detail-value" th:text="${customer.getEmail()}"></div>
+            </div>
+
+            <div class="detail-row">
+                <div class="detail-label">Address</div>
+                <div class="detail-value" th:text="${customer.getAddress()}"></div>
+            </div>
+
+            <div class="form-actions">
+                <a th:href="@{/customers/{id}/edit(id=${customer.getId()})}" class="btn btn-primary">Edit Customer</a>
+                <a th:href="@{/customers/{id}/delete(id=${customer.getId()})}" class="btn btn-danger">Delete Customer</a>
+                <a th:href="@{/customers}" class="btn btn-secondary">Back to List</a>
+            </div>
+        </div>
+    </main>
+
+    <footer th:replace="~{layout :: footer}"></footer>
+</body>
+</html>

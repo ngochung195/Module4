@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{layout :: head}"></head>
+<body>
+    <header th:replace="~{layout :: header}"></header>
+
+    <main class="container">
+        <div class="card">
+            <div class="card-header">
+                <h2 class="card-title" style="color: var(--danger);">Delete Customer Confirmation</h2>
+                <a th:href="@{/customers}" class="btn btn-secondary">Back to List</a>
+            </div>
+
+            <p style="margin-bottom: 1.5rem; color: var(--text-main);">Are you sure you want to delete the following customer?</p>
+
+            <form th:action="@{/customers/delete}" th:object="${customer}" method="post">
+                <input type="hidden" th:field="*{id}"/>
+                
+                <div class="detail-row">
+                    <div class="detail-label">Customer ID</div>
+                    <div class="detail-value" th:text="*{id}"></div>
+                </div>
+
+                <div class="detail-row">
+                    <div class="detail-label">Full Name</div>
+                    <div class="detail-value" th:text="*{name}"></div>
+                </div>
+
+                <div class="detail-row">
+                    <div class="detail-label">Email</div>
+                    <div class="detail-value" th:text="*{email}"></div>
+                </div>
+
+                <div class="detail-row">
+                    <div class="detail-label">Address</div>
+                    <div class="detail-value" th:text="*{address}"></div>
+                </div>
+
+                <div class="form-actions">
+                    <button type="submit" class="btn btn-danger">Confirm Delete</button>
+                    <a th:href="@{/customers}" class="btn btn-secondary">Cancel</a>
+                </div>
+            </form>
+        </div>
+    </main>
+
+    <footer th:replace="~{layout :: footer}"></footer>
+</body>
+</html>
