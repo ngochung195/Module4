@@ -1,4 +1,4 @@
-package com.codegym.customermanagement.configuration;
+package com.codegym.productmanagement.configuration;
 
 import jakarta.servlet.Filter;
 import org.springframework.web.filter.CharacterEncodingFilter;
@@ -8,12 +8,12 @@ public class AppInitializer extends AbstractAnnotationConfigDispatcherServletIni
 
     @Override
     protected Class<?>[] getRootConfigClasses() {
-        return new Class<?>[]{AppConfiguration.class};
+        return new Class[]{AppConfiguration.class};
     }
 
     @Override
     protected Class<?>[] getServletConfigClasses() {
-        return new Class<?>[]{};
+        return new Class[]{};
     }
 
     @Override
@@ -23,9 +23,9 @@ public class AppInitializer extends AbstractAnnotationConfigDispatcherServletIni
 
     @Override
     protected Filter[] getServletFilters() {
-        CharacterEncodingFilter filter = new CharacterEncodingFilter();
-        filter.setEncoding("UTF-8");
-        filter.setForceEncoding(true);
-        return new Filter[]{filter};
+        CharacterEncodingFilter characterEncodingFilter = new CharacterEncodingFilter();
+        characterEncodingFilter.setEncoding("UTF-8");
+        characterEncodingFilter.setForceEncoding(true);
+        return new Filter[]{characterEncodingFilter};
     }
 }
