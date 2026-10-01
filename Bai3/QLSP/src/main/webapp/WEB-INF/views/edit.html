@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="vi">
+<head th:replace="~{layout :: head('Chỉnh sửa khách hàng')}">
+</head>
+<body>
+    <header th:replace="~{layout :: header}"></header>
+
+    <div class="container" style="max-width: 650px;">
+        <div class="card">
+            <div class="page-header">
+                <h2>Cập nhật thông tin khách hàng</h2>
+                <a th:href="@{/customers}" class="btn btn-secondary btn-sm">Quay lại danh sách</a>
+            </div>
+
+            <form th:action="@{/customers/update}" th:object="${customer}" method="post">
+                <input type="hidden" th:field="*{id}" />
+
+                <div class="form-group">
+                    <label for="name">Họ và tên</label>
+                    <input type="text" id="name" th:field="*{name}" required />
+                </div>
+
+                <div class="form-group">
+                    <label for="email">Địa chỉ Email</label>
+                    <input type="email" id="email" th:field="*{email}" required />
+                </div>
+
+                <div class="form-group">
+                    <label for="address">Địa chỉ</label>
+                    <input type="text" id="address" th:field="*{address}" required />
+                </div>
+
+                <div style="margin-top: 1.5rem; display: flex; gap: 0.75rem;">
+                    <button type="submit" class="btn btn-primary">Cập nhật</button>
+                    <a th:href="@{/customers}" class="btn btn-secondary">Hủy bỏ</a>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <footer th:replace="~{layout :: footer}"></footer>
+</body>
+</html>

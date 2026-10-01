@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="vi">
+<head th:replace="~{layout :: head('Chi tiết khách hàng')}">
+</head>
+<body>
+    <header th:replace="~{layout :: header}"></header>
+
+    <div class="container" style="max-width: 600px;">
+        <div class="card">
+            <div class="page-header">
+                <h2>Thông tin chi tiết khách hàng</h2>
+                <a th:href="@{/customers}" class="btn btn-secondary btn-sm">Quay lại danh sách</a>
+            </div>
+
+            <div class="details-grid">
+                <div class="details-label">ID:</div>
+                <div th:text="${customer.id}">1</div>
+
+                <div class="details-label">Họ và tên:</div>
+                <div th:text="${customer.name}">John Doe</div>
+
+                <div class="details-label">Email:</div>
+                <div th:text="${customer.email}">john@codegym.vn</div>
+
+                <div class="details-label">Địa chỉ:</div>
+                <div th:text="${customer.address}">Hanoi</div>
+            </div>
+
+            <div style="margin-top: 1.5rem; display: flex; gap: 0.75rem;">
+                <a th:href="@{/customers/{id}/edit(id=${customer.id})}" class="btn btn-primary">Chỉnh sửa</a>
+                <a th:href="@{/customers}" class="btn btn-secondary">Quay lại danh sách</a>
+            </div>
+        </div>
+    </div>
+
+    <footer th:replace="~{layout :: footer}"></footer>
+</body>
+</html>
