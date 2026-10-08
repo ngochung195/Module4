@@ -1,0 +1,8 @@
+com\codegym\configuration\AppConfig.class
+com\codegym\model\Feedback.class
+com\codegym\repository\IFeedbackRepository.class
+com\codegym\controller\FeedbackController.class
+com\codegym\configuration\AppInit.class
+com\codegym\service\FeedbackServiceImpl.class
+com\codegym\service\IFeedbackService.class
+com\codegym\repository\FeedbackRepositoryImpl.class
