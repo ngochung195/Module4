@@ -58,4 +58,12 @@ public class FeedbackRepositoryImpl implements IFeedbackRepository {
             entityManager.merge(feedback);
         }
     }
+
+    @Override
+    public void remove(Long id) {
+        Feedback feedback = findById(id);
+        if (feedback != null) {
+            entityManager.remove(feedback);
+        }
+    }
 }

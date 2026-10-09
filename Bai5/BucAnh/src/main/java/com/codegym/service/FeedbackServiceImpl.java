@@ -55,4 +55,9 @@ public class FeedbackServiceImpl implements IFeedbackService {
     public void like(Long id) {
         feedbackRepository.like(id);
     }
+
+    @Override
+    public void remove(Long id) {
+        feedbackRepository.remove(id);
+    }
 }

@@ -4,5 +4,7 @@ D:\CodeGym\Module4\Bai5\BucAnh\src\main\java\com\codegym\controller\FeedbackCont
 D:\CodeGym\Module4\Bai5\BucAnh\src\main\java\com\codegym\model\Feedback.java
 D:\CodeGym\Module4\Bai5\BucAnh\src\main\java\com\codegym\repository\FeedbackRepositoryImpl.java
 D:\CodeGym\Module4\Bai5\BucAnh\src\main\java\com\codegym\repository\IFeedbackRepository.java
+D:\CodeGym\Module4\Bai5\BucAnh\src\main\java\com\codegym\repository\IGenerateRepository.java
 D:\CodeGym\Module4\Bai5\BucAnh\src\main\java\com\codegym\service\FeedbackServiceImpl.java
 D:\CodeGym\Module4\Bai5\BucAnh\src\main\java\com\codegym\service\IFeedbackService.java
+D:\CodeGym\Module4\Bai5\BucAnh\src\main\java\com\codegym\service\IGenerateService.java
