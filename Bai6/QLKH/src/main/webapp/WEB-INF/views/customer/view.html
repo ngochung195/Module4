@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chi tiết khách hàng</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        body {
+            background-color: #f4f6f9;
+            color: #333;
+            padding: 30px 20px;
+        }
+        .container {
+            max-width: 550px;
+            margin: 0 auto;
+            background: #fff;
+            padding: 25px 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+        }
+        .header {
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid #eaedf1;
+        }
+        h2 {
+            color: #2c3e50;
+            font-size: 22px;
+        }
+        .detail-group {
+            margin-bottom: 14px;
+            padding: 12px 14px;
+            background: #f8fafc;
+            border-radius: 6px;
+        }
+        .detail-label {
+            font-weight: 600;
+            color: #718096;
+            font-size: 13px;
+        }
+        .detail-value {
+            color: #2d3748;
+            font-size: 16px;
+            margin-top: 4px;
+            font-weight: 500;
+        }
+        .btn-group {
+            display: flex;
+            gap: 10px;
+            margin-top: 25px;
+        }
+        .btn {
+            padding: 10px 20px;
+            font-size: 14px;
+            font-weight: 600;
+            text-decoration: none;
+            border-radius: 6px;
+            border: none;
+            cursor: pointer;
+            text-align: center;
+        }
+        .btn-warning {
+            background-color: #f39c12;
+            color: #fff;
+            flex: 1;
+        }
+        .btn-warning:hover {
+            background-color: #d68910;
+        }
+        .btn-secondary {
+            background-color: #95a5a6;
+            color: #fff;
+            flex: 1;
+        }
+        .btn-secondary:hover {
+            background-color: #7f8c8d;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="header">
+        <h2>Chi tiết khách hàng</h2>
+    </div>
+
+    <div class="detail-group">
+        <div class="detail-label">Mã khách hàng (ID)</div>
+        <div class="detail-value" th:text="${customer.id}"></div>
+    </div>
+    <div class="detail-group">
+        <div class="detail-label">Họ</div>
+        <div class="detail-value" th:text="${customer.firstName}"></div>
+    </div>
+    <div class="detail-group">
+        <div class="detail-label">Tên</div>
+        <div class="detail-value" th:text="${customer.lastName}"></div>
+    </div>
+    <div class="detail-group">
+        <div class="detail-label">Email</div>
+        <div class="detail-value" th:text="${customer.email}"></div>
+    </div>
+
+    <div class="btn-group">
+        <a th:href="@{/customers/{id}/edit(id=${customer.id})}" class="btn btn-warning">Chỉnh sửa</a>
+        <a th:href="@{/customers}" class="btn btn-secondary">Quay lại danh sách</a>
+    </div>
+</div>
+</body>
+</html>

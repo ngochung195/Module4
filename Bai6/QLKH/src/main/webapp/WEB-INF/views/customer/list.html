@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Danh sách khách hàng</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        body {
+            background-color: #f4f6f9;
+            color: #333;
+            padding: 30px 20px;
+        }
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background: #fff;
+            padding: 25px 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+        }
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid #eaedf1;
+        }
+        h2 {
+            color: #2c3e50;
+            font-size: 24px;
+        }
+        .btn {
+            display: inline-block;
+            padding: 9px 18px;
+            font-size: 14px;
+            font-weight: 600;
+            text-decoration: none;
+            border-radius: 6px;
+            border: none;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+        .btn-primary {
+            background-color: #3498db;
+            color: #fff;
+        }
+        .btn-primary:hover {
+            background-color: #2980b9;
+        }
+        .btn-edit {
+            background-color: #f39c12;
+            color: #fff;
+            padding: 5px 10px;
+            font-size: 12px;
+        }
+        .btn-edit:hover {
+            background-color: #d68910;
+        }
+        .btn-delete {
+            background-color: #e74c3c;
+            color: #fff;
+            padding: 5px 10px;
+            font-size: 12px;
+        }
+        .btn-delete:hover {
+            background-color: #c0392b;
+        }
+        .btn-view {
+            background-color: #2ecc71;
+            color: #fff;
+            padding: 5px 10px;
+            font-size: 12px;
+        }
+        .btn-view:hover {
+            background-color: #27ae60;
+        }
+        .alert {
+            padding: 12px 16px;
+            border-radius: 6px;
+            margin-bottom: 20px;
+            font-size: 14px;
+        }
+        .alert-success {
+            background-color: #e8f8f0;
+            color: #27ae60;
+            border: 1px solid #c4f0d5;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 10px;
+        }
+        th, td {
+            padding: 12px 15px;
+            text-align: left;
+        }
+        th {
+            background-color: #f8fafc;
+            color: #4a5568;
+            font-weight: 600;
+            border-bottom: 2px solid #e2e8f0;
+        }
+        tr:nth-child(even) {
+            background-color: #fbfcfe;
+        }
+        tr:hover {
+            background-color: #f1f5f9;
+        }
+        td {
+            border-bottom: 1px solid #edf2f7;
+        }
+        .actions {
+            display: flex;
+            gap: 6px;
+        }
+        .empty-state {
+            text-align: center;
+            padding: 40px;
+            color: #a0aec0;
+            font-style: italic;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="header">
+        <h2>Quản lý khách hàng (JPA)</h2>
+        <a th:href="@{/customers/create}" class="btn btn-primary">+ Thêm khách hàng mới</a>
+    </div>
+
+    <div th:if="${success}" class="alert alert-success" th:text="${success}"></div>
+
+    <table>
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>Họ</th>
+            <th>Tên</th>
+            <th>Email</th>
+            <th>Hành động</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="customer : ${customers}">
+            <td th:text="${customer.id}"></td>
+            <td th:text="${customer.firstName}"></td>
+            <td th:text="${customer.lastName}"></td>
+            <td th:text="${customer.email}"></td>
+            <td class="actions">
+                <a th:href="@{/customers/{id}/edit(id=${customer.id})}" class="btn btn-edit">Sửa</a>
+                <a th:href="@{/customers/{id}/delete(id=${customer.id})}" class="btn btn-delete">Xóa</a>
+                <a th:href="@{/customers/{id}/view(id=${customer.id})}" class="btn btn-view">Xem</a>
+            </td>
+        </tr>
+        <tr th:if="${#lists.isEmpty(customers)}">
+            <td colspan="5" class="empty-state">Chưa có khách hàng nào trong hệ thống.</td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+</body>
+</html>

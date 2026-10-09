@@ -1,0 +1,60 @@
+plugins {
+    id 'java'
+    id 'war'
+}
+
+group = 'com.codegym'
+version = '1.0-SNAPSHOT'
+
+repositories {
+    mavenCentral()
+}
+
+ext {
+    junitVersion = '5.10.2'
+    springVersion = '6.1.14'
+    hibernateVersion = '6.5.3.Final'
+    thymeleafVersion = '3.1.2.RELEASE'
+}
+
+java {
+    sourceCompatibility = JavaVersion.VERSION_17
+    targetCompatibility = JavaVersion.VERSION_17
+}
+
+tasks.withType(JavaCompile).configureEach {
+    options.encoding = 'UTF-8'
+    options.compilerArgs << "-parameters"
+}
+
+dependencies {
+    // Servlet API for Tomcat 10.1+ (Jakarta EE 10)
+    providedCompile 'jakarta.servlet:jakarta.servlet-api:6.0.0'
+
+    // Spring MVC & Context
+    implementation "org.springframework:spring-webmvc:${springVersion}"
+    implementation "org.springframework:spring-orm:${springVersion}"
+    implementation "org.springframework:spring-tx:${springVersion}"
+
+    // Hibernate ORM 6.x (Jakarta Persistence 3.1)
+    implementation "org.hibernate.orm:hibernate-core:${hibernateVersion}"
+
+    // MySQL Connector
+    implementation 'com.mysql:mysql-connector-j:8.4.0'
+
+    // Thymeleaf 3.1+ for Spring 6
+    implementation "org.thymeleaf:thymeleaf-spring6:${thymeleafVersion}"
+
+    // Testing
+    testImplementation("org.junit.jupiter:junit-jupiter-api:${junitVersion}")
+    testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:${junitVersion}")
+}
+
+war {
+    archiveFileName = 'customer-management-jpa.war'
+}
+
+test {
+    useJUnitPlatform()
+}
+
