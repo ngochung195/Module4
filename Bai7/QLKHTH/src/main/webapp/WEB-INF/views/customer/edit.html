@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="layout :: head(~{::title})">
+    <title>Cập nhật khách hàng</title>
+</head>
+<body>
+<div th:replace="layout :: navbar"></div>
+
+<div class="container">
+    <div class="card">
+        <div class="card-header">
+            <h1 class="card-title">Cập nhật thông tin khách hàng</h1>
+            <a th:href="@{/customers}" class="btn btn-secondary">Quay lại danh sách</a>
+        </div>
+
+        <div th:if="${message}" class="alert-success" th:text="${message}"></div>
+
+        <form th:action="@{/edit-customer}" th:object="${customer}" method="post">
+            <input type="hidden" th:field="*{id}" />
+
+            <div class="form-group">
+                <label for="firstName">Họ & tên đệm:</label>
+                <input type="text" id="firstName" class="form-control" th:field="*{firstName}" required />
+            </div>
+
+            <div class="form-group">
+                <label for="lastName">Tên:</label>
+                <input type="text" id="lastName" class="form-control" th:field="*{lastName}" required />
+            </div>
+
+            <div class="form-group">
+                <label for="email">Email:</label>
+                <input type="email" id="email" class="form-control" th:field="*{email}" required />
+            </div>
+
+            <div class="form-group">
+                <label for="province">Tỉnh thành:</label>
+                <select id="province" class="form-control" th:field="*{province}">
+                    <option value="">-- Chọn tỉnh thành --</option>
+                    <option th:each="p : ${provinces}"
+                            th:value="${p.id}"
+                            th:text="${p.name}"
+                            th:selected="${customer.province != null and customer.province.id == p.id}"></option>
+                </select>
+            </div>
+
+            <div style="display: flex; gap: 1rem; margin-top: 1.5rem;">
+                <button type="submit" class="btn btn-primary">Cập nhật</button>
+                <a th:href="@{/customers}" class="btn btn-secondary">Hủy bỏ</a>
+            </div>
+        </form>
+    </div>
+</div>
+
+<div th:replace="layout :: footer"></div>
+</body>
+</html>

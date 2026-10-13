@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="layout :: head(~{::title})">
+    <title>Danh sách khách hàng theo tỉnh thành</title>
+</head>
+<body>
+<div th:replace="layout :: navbar"></div>
+
+<div class="container">
+    <div class="card">
+        <div class="card-header">
+            <div>
+                <h1 class="card-title" th:text="'Khách hàng thuộc tỉnh: ' + ${province.name}"></h1>
+                <p style="color: #64748b; font-size: 0.9rem; margin-top: 0.25rem;">Xem toàn bộ danh sách khách hàng thuộc tỉnh thành này</p>
+            </div>
+            <a th:href="@{/provinces}" class="btn btn-secondary">Quay lại danh sách tỉnh</a>
+        </div>
+
+        <div class="table-responsive">
+            <table>
+                <thead>
+                <tr>
+                    <th>#ID</th>
+                    <th>Họ & tên đệm</th>
+                    <th>Tên</th>
+                    <th>Email</th>
+                    <th style="text-align: center;">Thao tác</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="customer : ${customers}">
+                    <td th:text="${customer.id}"></td>
+                    <td th:text="${customer.firstName}"></td>
+                    <td th:text="${customer.lastName}"></td>
+                    <td th:text="${customer.email}"></td>
+                    <td style="text-align: center;">
+                        <div class="actions" style="justify-content: center;">
+                            <a th:href="@{/edit-customer/__${customer.id}__}" class="btn btn-secondary btn-sm">Sửa</a>
+                            <a th:href="@{/delete-customer/__${customer.id}__}" class="btn btn-danger btn-sm">Xóa</a>
+                        </div>
+                    </td>
+                </tr>
+                <tr th:if="${#lists.isEmpty(customers)}">
+                    <td colspan="5" style="text-align: center; color: #64748b; padding: 2rem;">
+                        Chưa có khách hàng nào thuộc tỉnh thành này.
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<div th:replace="layout :: footer"></div>
+</body>
+</html>

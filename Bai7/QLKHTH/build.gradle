@@ -1,0 +1,56 @@
+plugins {
+    id 'java'
+    id 'war'
+}
+
+group = 'com.codegym'
+version = '1.0-SNAPSHOT'
+
+repositories {
+    mavenCentral()
+}
+
+java {
+    sourceCompatibility = JavaVersion.VERSION_17
+    targetCompatibility = JavaVersion.VERSION_17
+}
+
+tasks.withType(JavaCompile).configureEach {
+    options.encoding = 'UTF-8'
+    options.compilerArgs << "-parameters"
+}
+
+ext {
+    springVersion = '6.2.6'
+    springDataJpaVersion = '3.4.2'
+    thymeleafVersion = '3.1.1.RELEASE'
+    hibernateVersion = '6.4.4.Final'
+    mysqlConnectorVersion = '8.0.30'
+    servletApiVersion = '6.0.0'
+}
+
+dependencies {
+    // Servlet API for Tomcat 10.1+ (Jakarta EE 10)
+    providedCompile "jakarta.servlet:jakarta.servlet-api:${servletApiVersion}"
+
+    // Spring MVC & Core
+    implementation "org.springframework:spring-webmvc:${springVersion}"
+    implementation "org.springframework:spring-orm:${springVersion}"
+    implementation "org.springframework:spring-tx:${springVersion}"
+
+    // Spring Data JPA
+    implementation "org.springframework.data:spring-data-jpa:${springDataJpaVersion}"
+
+    // Hibernate ORM 6.4.4 (Jakarta Persistence 3.1)
+    implementation "org.hibernate.orm:hibernate-core:${hibernateVersion}"
+
+    // MySQL Connector
+    implementation "mysql:mysql-connector-java:${mysqlConnectorVersion}"
+
+    // Thymeleaf 3.1.1 for Spring 6
+    implementation "org.thymeleaf:thymeleaf-spring6:${thymeleafVersion}"
+}
+
+war {
+    archiveFileName = 'customer-province-management.war'
+}

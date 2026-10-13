@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="layout :: head(~{::title})">
+    <title>Danh sách tỉnh thành</title>
+</head>
+<body>
+<div th:replace="layout :: navbar"></div>
+
+<div class="container">
+    <div class="card">
+        <div class="card-header">
+            <h1 class="card-title">Danh sách tỉnh thành</h1>
+            <a th:href="@{/create-province}" class="btn btn-primary">+ Thêm tỉnh thành mới</a>
+        </div>
+
+        <div class="table-responsive">
+            <table>
+                <thead>
+                <tr>
+                    <th>#ID</th>
+                    <th>Tên tỉnh thành</th>
+                    <th style="text-align: center;">Thao tác</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="province : ${provinces}">
+                    <td th:text="${province.id}"></td>
+                    <td>
+                        <a th:href="@{/view-province/__${province.id}__}" th:text="${province.name}" style="color: var(--primary); font-weight: 500; text-decoration: none;"></a>
+                    </td>
+                    <td style="text-align: center;">
+                        <div class="actions" style="justify-content: center;">
+                            <a th:href="@{/view-province/__${province.id}__}" class="btn btn-secondary btn-sm">Xem khách hàng</a>
+                            <a th:href="@{/edit-province/__${province.id}__}" class="btn btn-secondary btn-sm">Sửa</a>
+                            <a th:href="@{/delete-province/__${province.id}__}" class="btn btn-danger btn-sm">Xóa</a>
+                        </div>
+                    </td>
+                </tr>
+                <tr th:if="${#lists.isEmpty(provinces)}">
+                    <td colspan="3" style="text-align: center; color: #64748b; padding: 2rem;">
+                        Chưa có tỉnh thành nào trong hệ thống.
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<div th:replace="layout :: footer"></div>
+</body>
+</html>

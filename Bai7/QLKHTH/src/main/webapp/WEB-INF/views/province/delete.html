@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="layout :: head(~{::title})">
+    <title>Xóa tỉnh thành</title>
+</head>
+<body>
+<div th:replace="layout :: navbar"></div>
+
+<div class="container">
+    <div class="card">
+        <div class="card-header">
+            <h1 class="card-title" style="color: #e63946;">Xác nhận xóa tỉnh thành</h1>
+            <a th:href="@{/provinces}" class="btn btn-secondary">Quay lại danh sách</a>
+        </div>
+
+        <p style="margin-bottom: 1.5rem; color: #475569;">
+            Bạn có chắc chắn muốn xóa tỉnh thành này không? Thao tác này cũng có thể xóa hoặc ảnh hưởng đến các khách hàng thuộc tỉnh thành này.
+        </p>
+
+        <table style="max-width: 500px; margin-bottom: 2rem;">
+            <tr>
+                <th style="width: 150px;">Mã tỉnh thành:</th>
+                <td th:text="${province.id}"></td>
+            </tr>
+            <tr>
+                <th>Tên tỉnh thành:</th>
+                <td th:text="${province.name}"></td>
+            </tr>
+        </table>
+
+        <form th:action="@{/delete-province}" th:object="${province}" method="post">
+            <input type="hidden" th:field="*{id}" />
+            <div style="display: flex; gap: 1rem;">
+                <button type="submit" class="btn btn-danger">Xóa vĩnh viễn</button>
+                <a th:href="@{/provinces}" class="btn btn-secondary">Hủy bỏ</a>
+            </div>
+        </form>
+    </div>
+</div>
+
+<div th:replace="layout :: footer"></div>
+</body>
+</html>

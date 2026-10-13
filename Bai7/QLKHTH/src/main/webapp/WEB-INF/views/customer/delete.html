@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="layout :: head(~{::title})">
+    <title>Xóa khách hàng</title>
+</head>
+<body>
+<div th:replace="layout :: navbar"></div>
+
+<div class="container">
+    <div class="card">
+        <div class="card-header">
+            <h1 class="card-title" style="color: #e63946;">Xác nhận xóa khách hàng</h1>
+            <a th:href="@{/customers}" class="btn btn-secondary">Quay lại danh sách</a>
+        </div>
+
+        <p style="margin-bottom: 1.5rem; color: #475569;">
+            Bạn có chắc chắn muốn xóa khách hàng sau đây không? Hành động này không thể hoàn tác.
+        </p>
+
+        <table style="max-width: 500px; margin-bottom: 2rem;">
+            <tr>
+                <th style="width: 150px;">Mã khách hàng:</th>
+                <td th:text="${customer.id}"></td>
+            </tr>
+            <tr>
+                <th>Họ và tên:</th>
+                <td th:text="${customer.firstName + ' ' + customer.lastName}"></td>
+            </tr>
+            <tr>
+                <th>Email:</th>
+                <td th:text="${customer.email}"></td>
+            </tr>
+            <tr>
+                <th>Tỉnh thành:</th>
+                <td th:text="${customer.province != null ? customer.province.name : 'Chưa có'}"></td>
+            </tr>
+        </table>
+
+        <form th:action="@{/delete-customer}" th:object="${customer}" method="post">
+            <input type="hidden" th:field="*{id}" />
+            <div style="display: flex; gap: 1rem;">
+                <button type="submit" class="btn btn-danger">Xóa vĩnh viễn</button>
+                <a th:href="@{/customers}" class="btn btn-secondary">Hủy bỏ</a>
+            </div>
+        </form>
+    </div>
+</div>
+
+<div th:replace="layout :: footer"></div>
+</body>
+</html>

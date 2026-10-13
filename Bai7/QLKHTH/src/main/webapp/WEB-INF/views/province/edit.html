@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="layout :: head(~{::title})">
+    <title>Cập nhật tỉnh thành</title>
+</head>
+<body>
+<div th:replace="layout :: navbar"></div>
+
+<div class="container">
+    <div class="card">
+        <div class="card-header">
+            <h1 class="card-title">Cập nhật thông tin tỉnh thành</h1>
+            <a th:href="@{/provinces}" class="btn btn-secondary">Quay lại danh sách</a>
+        </div>
+
+        <div th:if="${message}" class="alert-success" th:text="${message}"></div>
+
+        <form th:action="@{/edit-province}" th:object="${province}" method="post">
+            <input type="hidden" th:field="*{id}" />
+
+            <div class="form-group">
+                <label for="name">Tên tỉnh thành:</label>
+                <input type="text" id="name" class="form-control" th:field="*{name}" required />
+            </div>
+
+            <div style="display: flex; gap: 1rem; margin-top: 1.5rem;">
+                <button type="submit" class="btn btn-primary">Cập nhật</button>
+                <a th:href="@{/provinces}" class="btn btn-secondary">Hủy bỏ</a>
+            </div>
+        </form>
+    </div>
+</div>
+
+<div th:replace="layout :: footer"></div>
+</body>
+</html>
