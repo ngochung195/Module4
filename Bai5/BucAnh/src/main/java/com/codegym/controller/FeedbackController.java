@@ -3,6 +3,10 @@ package com.codegym.controller;
 import com.codegym.model.Feedback;
 import com.codegym.service.IFeedbackService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -19,11 +23,15 @@ public class FeedbackController {
     }
 
     @GetMapping({"", "/"})
-    public String index(Model model) {
+    public String index(Model model,
+                        @PageableDefault(size = 4, sort = "id", direction = Sort.Direction.DESC) Pageable pageable) {
         Feedback feedback = new Feedback();
         feedback.setRating(5); // default rating
         model.addAttribute("feedback", feedback);
-        model.addAttribute("feedbackList", feedbackService.findAllToday());
+
+        Page<Feedback> feedbackPage = feedbackService.findAll(pageable);
+        model.addAttribute("feedbackPage", feedbackPage);
+        model.addAttribute("feedbackList", feedbackPage.getContent());
         return "index";
     }
 
@@ -34,8 +42,9 @@ public class FeedbackController {
     }
 
     @GetMapping("/like/{id}")
-    public String likeFeedback(@PathVariable("id") Long id) {
+    public String likeFeedback(@PathVariable("id") Long id,
+                               @RequestParam(value = "page", defaultValue = "0") int page) {
         feedbackService.like(id);
-        return "redirect:/";
+        return "redirect:/?page=" + page;
     }
 }

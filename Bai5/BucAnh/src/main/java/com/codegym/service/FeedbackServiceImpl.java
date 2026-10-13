@@ -3,10 +3,13 @@ package com.codegym.service;
 import com.codegym.model.Feedback;
 import com.codegym.repository.IFeedbackRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class FeedbackServiceImpl implements IFeedbackService {
@@ -19,8 +22,18 @@ public class FeedbackServiceImpl implements IFeedbackService {
     }
 
     @Override
-    public List<Feedback> findAll() {
+    public Iterable<Feedback> findAll() {
         return feedbackRepository.findAll();
+    }
+
+    @Override
+    public Page<Feedback> findAll(Pageable pageable) {
+        return feedbackRepository.findAll(pageable);
+    }
+
+    @Override
+    public Page<Feedback> findAllByDate(LocalDate date, Pageable pageable) {
+        return feedbackRepository.findAllByDate(date, pageable);
     }
 
     @Override
@@ -34,7 +47,7 @@ public class FeedbackServiceImpl implements IFeedbackService {
     }
 
     @Override
-    public Feedback findById(Long id) {
+    public Optional<Feedback> findById(Long id) {
         return feedbackRepository.findById(id);
     }
 
@@ -47,17 +60,17 @@ public class FeedbackServiceImpl implements IFeedbackService {
     }
 
     @Override
-    public void update(Feedback feedback) {
-        feedbackRepository.update(feedback);
-    }
-
-    @Override
     public void like(Long id) {
-        feedbackRepository.like(id);
+        Optional<Feedback> optionalFeedback = feedbackRepository.findById(id);
+        if (optionalFeedback.isPresent()) {
+            Feedback feedback = optionalFeedback.get();
+            feedback.setLikes(feedback.getLikes() + 1);
+            feedbackRepository.save(feedback);
+        }
     }
 
     @Override
     public void remove(Long id) {
-        feedbackRepository.remove(id);
+        feedbackRepository.deleteById(id);
     }
 }

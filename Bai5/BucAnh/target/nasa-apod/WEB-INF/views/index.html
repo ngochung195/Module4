@@ -101,6 +101,171 @@
         }
 
         /* NASA Image Section */
+        .apod-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 0.75rem;
+            margin-bottom: 1.25rem;
+        }
+
+        .apod-controls {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+        }
+
+        .apod-date-input {
+            background: rgba(15, 23, 42, 0.75);
+            border: 1px solid var(--card-border);
+            color: #e2e8f0;
+            padding: 0.4rem 0.65rem;
+            border-radius: 0.5rem;
+            font-size: 0.8rem;
+            outline: none;
+            transition: all 0.2s;
+            color-scheme: dark;
+        }
+
+        .apod-date-input:focus {
+            border-color: var(--primary);
+            box-shadow: 0 0 0 2px rgba(99, 102, 241, 0.2);
+        }
+
+        .apod-btn {
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid var(--card-border);
+            color: #cbd5e1;
+            padding: 0.4rem 0.75rem;
+            border-radius: 0.5rem;
+            font-size: 0.8rem;
+            font-weight: 600;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.35rem;
+            transition: all 0.2s;
+        }
+
+        .apod-btn:hover {
+            background: rgba(99, 102, 241, 0.2);
+            border-color: var(--primary);
+            color: #ffffff;
+        }
+
+        .apod-key-panel {
+            background: rgba(15, 23, 42, 0.85);
+            border: 1px solid rgba(99, 102, 241, 0.3);
+            border-radius: 0.75rem;
+            padding: 0.85rem 1rem;
+            margin-bottom: 1.25rem;
+            animation: apodFadeIn 0.2s ease;
+        }
+
+        .key-panel-content {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+        }
+
+        .key-panel-content input {
+            flex: 1;
+            min-width: 220px;
+            background: rgba(30, 41, 59, 0.8);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            color: #fff;
+            padding: 0.45rem 0.75rem;
+            border-radius: 0.5rem;
+            font-size: 0.85rem;
+            outline: none;
+        }
+
+        .key-panel-content input:focus {
+            border-color: var(--primary);
+        }
+
+        .btn-save-key {
+            background: var(--primary);
+            color: #fff;
+            border: none;
+            padding: 0.45rem 0.85rem;
+            border-radius: 0.5rem;
+            font-size: 0.82rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        .btn-save-key:hover {
+            background: var(--primary-hover);
+        }
+
+        .btn-clear-key {
+            background: rgba(255, 255, 255, 0.1);
+            color: #cbd5e1;
+            border: 1px solid var(--card-border);
+            padding: 0.45rem 0.75rem;
+            border-radius: 0.5rem;
+            font-size: 0.82rem;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .btn-clear-key:hover {
+            background: rgba(239, 68, 68, 0.2);
+            border-color: rgba(239, 68, 68, 0.4);
+            color: #fca5a5;
+        }
+
+        .btn-get-key {
+            color: #a5b4fc;
+            text-decoration: none;
+            font-size: 0.82rem;
+            font-weight: 600;
+            margin-left: auto;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.25rem;
+            transition: color 0.2s;
+        }
+
+        .btn-get-key:hover {
+            color: #e0e7ff;
+            text-decoration: underline;
+        }
+
+        .apod-status-banner {
+            padding: 0.75rem 1rem;
+            border-radius: 0.75rem;
+            font-size: 0.85rem;
+            line-height: 1.5;
+            margin-bottom: 1.25rem;
+            display: flex;
+            align-items: flex-start;
+            gap: 0.6rem;
+        }
+
+        .apod-status-banner.warning {
+            background: rgba(245, 158, 11, 0.12);
+            border: 1px solid rgba(245, 158, 11, 0.35);
+            color: #fde68a;
+        }
+
+        .apod-status-banner.error {
+            background: rgba(239, 68, 68, 0.12);
+            border: 1px solid rgba(239, 68, 68, 0.35);
+            color: #fca5a5;
+        }
+
+        .apod-status-banner.info {
+            background: rgba(99, 102, 241, 0.12);
+            border: 1px solid rgba(99, 102, 241, 0.35);
+            color: #c7d2fe;
+        }
+
         .image-wrapper {
             position: relative;
             width: 100%;
@@ -110,8 +275,37 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            min-height: 360px;
+            min-height: 380px;
             border: 1px solid var(--card-border);
+        }
+
+        .apod-loading-spinner {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 0.85rem;
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            padding: 3rem 1rem;
+        }
+
+        .spinner {
+            width: 38px;
+            height: 38px;
+            border: 3px solid rgba(255, 255, 255, 0.15);
+            border-top-color: var(--primary);
+            border-radius: 50%;
+            animation: apodSpin 0.8s linear infinite;
+        }
+
+        @keyframes apodSpin {
+            to { transform: rotate(360deg); }
+        }
+
+        @keyframes apodFadeIn {
+            from { opacity: 0; transform: translateY(-4px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
         #img-of-the-day {
@@ -127,20 +321,45 @@
             transform: scale(1.01);
         }
 
-        .apod-info {
-            margin-top: 1rem;
+        #video-of-the-day {
+            width: 100%;
+            min-height: 420px;
+            border: 0;
+            display: block;
         }
 
-        .apod-info h3 {
-            font-size: 1.15rem;
-            color: #e2e8f0;
+        .apod-info {
+            margin-top: 1.25rem;
+        }
+
+        .apod-meta-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            flex-wrap: wrap;
+            gap: 0.5rem;
             margin-bottom: 0.5rem;
         }
 
+        .apod-info h3 {
+            font-size: 1.2rem;
+            color: #f1f5f9;
+            font-weight: 700;
+        }
+
+        .apod-date-badge {
+            font-size: 0.8rem;
+            color: #94a3b8;
+            background: rgba(255, 255, 255, 0.06);
+            padding: 0.25rem 0.6rem;
+            border-radius: 0.375rem;
+            border: 1px solid var(--card-border);
+        }
+
         .apod-info p {
-            font-size: 0.9rem;
+            font-size: 0.92rem;
             color: var(--text-muted);
-            line-height: 1.6;
+            line-height: 1.65;
         }
 
         /* Form styling */
@@ -329,6 +548,63 @@
             color: var(--text-muted);
             font-size: 0.95rem;
         }
+
+        /* Pagination Styling */
+        .pagination-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 1.5rem;
+            padding-top: 1.25rem;
+            border-top: 1px solid var(--card-border);
+            flex-wrap: wrap;
+            gap: 0.75rem;
+        }
+
+        .pagination-info {
+            font-size: 0.88rem;
+            color: var(--text-muted);
+            font-weight: 500;
+        }
+
+        .pagination-info span {
+            color: #f1f5f9;
+            font-weight: 600;
+        }
+
+        .pagination-controls {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .btn-page {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(255, 255, 255, 0.05);
+            color: #cbd5e1;
+            border: 1px solid var(--card-border);
+            padding: 0.45rem 0.9rem;
+            border-radius: 0.5rem;
+            font-size: 0.85rem;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.2s;
+        }
+
+        .btn-page:hover {
+            background: rgba(99, 102, 241, 0.2);
+            border-color: var(--primary);
+            color: #fff;
+            transform: translateY(-1px);
+        }
+
+        .btn-page.disabled {
+            opacity: 0.35;
+            cursor: not-allowed;
+            pointer-events: none;
+        }
     </style>
 </head>
 <body>
@@ -343,12 +619,43 @@
 
     <!-- NASA APOD Card -->
     <section class="card">
-        <div class="card-title">🌌 Astronomy Picture of the Day</div>
-        <div class="image-wrapper">
-            <img id="img-of-the-day" alt="NASA Picture of the Day">
+        <div class="apod-header">
+            <div class="card-title" style="margin-bottom: 0;">🌌 Astronomy Picture of the Day</div>
+            <div class="apod-controls">
+                <input type="date" id="apod-date-picker" title="Chọn ngày xem ảnh APOD" class="apod-date-input">
+                <button type="button" id="btn-apod-key" class="apod-btn" title="Cấu hình NASA API Key">🔑 API Key</button>
+                <button type="button" id="btn-apod-reload" class="apod-btn" title="Tải lại ảnh">🔄 Tải lại</button>
+            </div>
         </div>
+
+        <!-- Custom API Key Config Panel -->
+        <div id="apod-key-panel" class="apod-key-panel" style="display: none;">
+            <div class="key-panel-content">
+                <span style="font-size: 1.1rem;">🔑</span>
+                <input type="text" id="custom-api-key" placeholder="Dán NASA API Key của bạn (mặc định DEMO_KEY)..." autocomplete="off">
+                <button type="button" id="btn-save-key" class="btn-save-key">Lưu</button>
+                <button type="button" id="btn-clear-key" class="btn-clear-key">Dùng DEMO</button>
+                <a href="https://api.nasa.gov/" target="_blank" rel="noopener" class="btn-get-key">Lấy Key miễn phí ↗</a>
+            </div>
+        </div>
+
+        <!-- Status & Fallback Banner -->
+        <div id="apod-status-banner" class="apod-status-banner" style="display: none;"></div>
+
+        <div class="image-wrapper" id="apod-media-wrapper">
+            <div id="apod-loading" class="apod-loading-spinner">
+                <div class="spinner"></div>
+                <span>Đang kết nối NASA Astronomy...</span>
+            </div>
+            <img id="img-of-the-day" alt="NASA Picture of the Day" style="display: none;">
+            <iframe id="video-of-the-day" allowfullscreen style="display: none;"></iframe>
+        </div>
+
         <div class="apod-info">
-            <h3 id="apod-title">Đang tải thông tin từ NASA...</h3>
+            <div class="apod-meta-row">
+                <h3 id="apod-title">Đang tải thông tin từ NASA...</h3>
+                <span id="apod-date-badge" class="apod-date-badge" style="display: none;"></span>
+            </div>
             <p id="apod-desc"></p>
         </div>
     </section>
@@ -385,28 +692,52 @@
         </form>
     </section>
 
-    <!-- Today's Comments Card -->
+    <!-- Today's Comments Card with Pagination -->
     <section class="card">
-        <div class="card-title">💬 Bình luận trong ngày hôm nay</div>
+        <div class="card-title">💬 Danh sách bình luận & đánh giá (<span th:text="${feedbackPage != null ? feedbackPage.totalElements : 0}">0</span>)</div>
         
-        <div th:if="${#lists.isEmpty(feedbackList)}" class="empty-state">
-            Chưa có đánh giá nào cho ngày hôm nay. Hãy là người đầu tiên để lại nhận xét!
+        <div th:if="${feedbackPage == null or feedbackPage.totalElements == 0}" class="empty-state">
+            Chưa có đánh giá nào. Hãy là người đầu tiên để lại nhận xét!
         </div>
 
-        <div th:unless="${#lists.isEmpty(feedbackList)}" class="comments-list">
-            <div class="comment-item" th:each="item : ${feedbackList}">
-                <div class="comment-content">
-                    <div class="comment-header">
-                        <span class="comment-author" th:text="${item.author}">Tên tác giả</span>
-                        <span class="comment-rating" th:text="${item.rating} + ' ⭐'">5 ⭐</span>
+        <div th:unless="${feedbackPage == null or feedbackPage.totalElements == 0}">
+            <div class="comments-list">
+                <div class="comment-item" th:each="item : ${feedbackPage.content}">
+                    <div class="comment-content">
+                        <div class="comment-header">
+                            <span class="comment-author" th:text="${item.author}">Tên tác giả</span>
+                            <span class="comment-rating" th:text="${item.rating} + ' ⭐'">5 ⭐</span>
+                        </div>
+                        <p class="comment-text" th:text="${item.feedback}">Nội dung bình luận</p>
                     </div>
-                    <p class="comment-text" th:text="${item.feedback}">Nội dung bình luận</p>
+                    <div class="like-container">
+                        <a th:href="@{'/like/' + ${item.id}(page=${feedbackPage.number})}" class="btn-like">
+                            ❤️ Thích
+                        </a>
+                        <span class="likes-count" th:text="${item.likes} + ' lượt thích'">0 lượt thích</span>
+                    </div>
                 </div>
-                <div class="like-container">
-                    <a th:href="@{'/like/' + ${item.id}}" class="btn-like">
-                        ❤️ Thích
-                    </a>
-                    <span class="likes-count" th:text="${item.likes} + ' lượt thích'">0 lượt thích</span>
+            </div>
+
+            <!-- Pagination Bar -->
+            <div class="pagination-container" th:if="${feedbackPage.totalPages > 1}">
+                <div class="pagination-info">
+                    Trang <span th:text="${feedbackPage.number + 1}">1</span> / <span th:text="${feedbackPage.totalPages}">1</span>
+                    (Tổng cộng <span th:text="${feedbackPage.totalElements}">0</span> bình luận)
+                </div>
+
+                <div class="pagination-controls">
+                    <a th:if="${feedbackPage.hasPrevious()}"
+                       th:href="@{/(page=${feedbackPage.number - 1})}"
+                       class="btn-page">&laquo; Trang trước</a>
+                    <span th:unless="${feedbackPage.hasPrevious()}"
+                          class="btn-page disabled">&laquo; Trang trước</span>
+
+                    <a th:if="${feedbackPage.hasNext()}"
+                       th:href="@{/(page=${feedbackPage.number + 1})}"
+                       class="btn-page">Trang sau &raquo;</a>
+                    <span th:unless="${feedbackPage.hasNext()}"
+                          class="btn-page disabled">Trang sau &raquo;</span>
                 </div>
             </div>
         </div>
@@ -415,28 +746,198 @@
 
 <!-- NASA APOD Request Script -->
 <script>
-    let query = 'https://api.nasa.gov/planetary/apod?api_key=DEMO_KEY';
-    let request = new XMLHttpRequest();
-    request.open('GET', query);
-    request.onload = function() {
-        if (request.status === 200) {
-            let response = JSON.parse(request.responseText);
-            let img = document.getElementById('img-of-the-day');
-            img.setAttribute('src', response.url);
-            if (response.title) {
-                document.getElementById('apod-title').innerText = response.title;
-            }
-            if (response.explanation) {
-                document.getElementById('apod-desc').innerText = response.explanation;
-            }
+    const DEFAULT_KEY = 'DEMO_KEY';
+    const FALLBACK_APOD = {
+        title: 'Vũ Trụ Kỳ Vĩ: Tinh Vân Carina (Carina Nebula)',
+        date: new Date().toISOString().split('T')[0],
+        url: 'https://images.unsplash.com/photo-1462331940025-496dfbfc7564?auto=format&fit=crop&w=1600&q=80',
+        media_type: 'image',
+        explanation: 'Do NASA DEMO_KEY bị giới hạn số lần gọi API (Rate limit 30-50 lượt/giờ), hệ thống hiển thị ảnh thiên văn dự phòng độ phân giải cao. Tinh vân Carina là một trong những vườn ươm sao lớn nhất và sáng nhất trên bầu trời đêm, nơi chứa đựng các ngôi sao khổng lồ sáng gấp hàng triệu lần Mặt Trời.'
+    };
+
+    function getApiKey() {
+        return localStorage.getItem('nasa_apod_key') || DEFAULT_KEY;
+    }
+
+    function setApiKey(key) {
+        if (!key || key.trim() === '' || key.trim() === DEFAULT_KEY) {
+            localStorage.removeItem('nasa_apod_key');
         } else {
-            document.getElementById('apod-title').innerText = 'Không thể tải ảnh từ NASA (Vui lòng kiểm tra API key hoặc mạng).';
+            localStorage.setItem('nasa_apod_key', key.trim());
         }
-    };
-    request.onerror = function() {
-        document.getElementById('apod-title').innerText = 'Lỗi kết nối đến NASA API.';
-    };
-    request.send();
+    }
+
+    function showStatus(message, type = 'warning') {
+        const banner = document.getElementById('apod-status-banner');
+        if (!message) {
+            banner.style.display = 'none';
+            return;
+        }
+        banner.className = `apod-status-banner ${type}`;
+        banner.innerHTML = message;
+        banner.style.display = 'flex';
+    }
+
+    function displayApod(data, isFallback = false, reason = '') {
+        const loading = document.getElementById('apod-loading');
+        const img = document.getElementById('img-of-the-day');
+        const video = document.getElementById('video-of-the-day');
+        const title = document.getElementById('apod-title');
+        const desc = document.getElementById('apod-desc');
+        const dateBadge = document.getElementById('apod-date-badge');
+
+        loading.style.display = 'none';
+
+        if (data.media_type === 'video') {
+            img.style.display = 'none';
+            video.src = data.url;
+            video.style.display = 'block';
+        } else {
+            video.style.display = 'none';
+            video.src = '';
+            img.style.display = 'block';
+            img.src = data.url;
+            img.onerror = function() {
+                if (!isFallback) {
+                    displayApod(FALLBACK_APOD, true, 'Ảnh từ server NASA không tải được (Lỗi nguồn ảnh hoặc mạng).');
+                }
+            };
+        }
+
+        title.innerText = data.title || 'Astronomy Picture of the Day';
+        desc.innerText = data.explanation || '';
+        if (data.date) {
+            dateBadge.innerText = '📅 ' + data.date;
+            dateBadge.style.display = 'inline-block';
+        } else {
+            dateBadge.style.display = 'none';
+        }
+
+        if (isFallback) {
+            let msg = `<div>⚠️ <strong>Thông báo:</strong> ${reason || 'Không thể lấy dữ liệu trực tiếp từ NASA'}. Đang hiển thị ảnh vũ trụ dự phòng.`;
+            msg += `<br>👉 Bạn có thể bấm nút <strong>[🔑 API Key]</strong> ở trên để nhập API key miễn phí lấy từ <a href="https://api.nasa.gov/" target="_blank" style="color: #93c5fd; text-decoration: underline;">api.nasa.gov</a>.</div>`;
+            showStatus(msg, 'warning');
+        } else {
+            showStatus(null);
+        }
+    }
+
+    function loadApod(selectedDate) {
+        const loading = document.getElementById('apod-loading');
+        const img = document.getElementById('img-of-the-day');
+        const video = document.getElementById('video-of-the-day');
+        loading.style.display = 'flex';
+        img.style.display = 'none';
+        video.style.display = 'none';
+        showStatus(null);
+
+        const currentKey = getApiKey();
+        let query = `https://api.nasa.gov/planetary/apod?api_key=${encodeURIComponent(currentKey)}`;
+        if (selectedDate) {
+            query += `&date=${encodeURIComponent(selectedDate)}`;
+        }
+
+        const request = new XMLHttpRequest();
+        request.open('GET', query, true);
+        request.timeout = 10000; // 10s timeout
+
+        request.onload = function() {
+            if (request.status === 200) {
+                try {
+                    const data = JSON.parse(request.responseText);
+                    displayApod(data, false);
+                } catch (e) {
+                    displayApod(FALLBACK_APOD, true, 'Lỗi xử lý dữ liệu trả về từ NASA.');
+                }
+            } else if (request.status === 429) {
+                displayApod(FALLBACK_APOD, true, 'DEMO_KEY đã vượt quá giới hạn lượt gọi của NASA (Rate Limit - 30 lượt/giờ).');
+            } else if (request.status === 403) {
+                displayApod(FALLBACK_APOD, true, 'API Key không hợp lệ hoặc bị từ chối truy cập (HTTP 403).');
+            } else {
+                displayApod(FALLBACK_APOD, true, `NASA API trả về mã lỗi HTTP ${request.status}.`);
+            }
+        };
+
+        request.onerror = function() {
+            displayApod(FALLBACK_APOD, true, 'Không thể kết nối đến máy chủ NASA (Lỗi mạng hoặc kết nối bị gián đoạn).');
+        };
+
+        request.ontimeout = function() {
+            displayApod(FALLBACK_APOD, true, 'Kết nối tới máy chủ NASA quá hạn (Timeout).');
+        };
+
+        request.send();
+    }
+
+    // Event listeners
+    document.addEventListener('DOMContentLoaded', function() {
+        const datePicker = document.getElementById('apod-date-picker');
+        const todayStr = new Date().toISOString().split('T')[0];
+        if (datePicker) {
+            datePicker.max = todayStr;
+            datePicker.value = todayStr;
+            datePicker.addEventListener('change', function() {
+                if (this.value) {
+                    loadApod(this.value);
+                }
+            });
+        }
+
+        const btnKey = document.getElementById('btn-apod-key');
+        const keyPanel = document.getElementById('apod-key-panel');
+        const keyInput = document.getElementById('custom-api-key');
+        const btnSaveKey = document.getElementById('btn-save-key');
+        const btnClearKey = document.getElementById('btn-clear-key');
+        const btnReload = document.getElementById('btn-apod-reload');
+
+        const savedKey = localStorage.getItem('nasa_apod_key');
+        if (keyInput) {
+            keyInput.value = savedKey || '';
+        }
+
+        if (btnKey && keyPanel) {
+            btnKey.addEventListener('click', function() {
+                const isHidden = keyPanel.style.display === 'none';
+                keyPanel.style.display = isHidden ? 'block' : 'none';
+                if (isHidden && keyInput) {
+                    keyInput.focus();
+                }
+            });
+        }
+
+        if (btnSaveKey && keyInput) {
+            btnSaveKey.addEventListener('click', function() {
+                const val = keyInput.value.trim();
+                if (!val) {
+                    setApiKey(null);
+                    alert('Đã xóa key cá nhân, chuyển về dùng DEMO_KEY.');
+                } else {
+                    setApiKey(val);
+                    alert('Đã lưu NASA API Key cá nhân thành công!');
+                }
+                if (keyPanel) keyPanel.style.display = 'none';
+                loadApod(datePicker ? datePicker.value : null);
+            });
+        }
+
+        if (btnClearKey && keyInput) {
+            btnClearKey.addEventListener('click', function() {
+                setApiKey(null);
+                keyInput.value = '';
+                alert('Đã chuyển về dùng DEMO_KEY mặc định.');
+                loadApod(datePicker ? datePicker.value : null);
+            });
+        }
+
+        if (btnReload) {
+            btnReload.addEventListener('click', function() {
+                loadApod(datePicker ? datePicker.value : null);
+            });
+        }
+
+        // Tải ảnh ban đầu
+        loadApod();
+    });
 </script>
 
 </body>

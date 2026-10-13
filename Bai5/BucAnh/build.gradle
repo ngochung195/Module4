@@ -24,6 +24,7 @@ dependencies {
     implementation "org.springframework:spring-webmvc:${springVersion}"
     implementation "org.springframework:spring-orm:${springVersion}"
     implementation "org.springframework:spring-tx:${springVersion}"
+    implementation "org.springframework.data:spring-data-jpa:3.2.11"
 
     // Hibernate 6
     implementation "org.hibernate.orm:hibernate-core:${hibernateVersion}"
