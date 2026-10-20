@@ -1,0 +1,54 @@
+plugins {
+    id 'java'
+    id 'war'
+}
+
+group = 'com.codegym'
+version = '1.0-SNAPSHOT'
+
+repositories {
+    mavenCentral()
+}
+
+java {
+    if (JavaVersion.current().isCompatibleWith(JavaVersion.VERSION_21)) {
+        sourceCompatibility = JavaVersion.VERSION_21
+        targetCompatibility = JavaVersion.VERSION_21
+    } else {
+        sourceCompatibility = JavaVersion.VERSION_17
+        targetCompatibility = JavaVersion.VERSION_17
+    }
+}
+
+tasks.withType(JavaCompile).configureEach {
+    options.compilerArgs << '-parameters'
+    options.encoding = 'UTF-8'
+}
+
+dependencies {
+    // Spring MVC
+    implementation 'org.springframework:spring-webmvc:6.2.6'
+
+    // Thymeleaf Spring 6
+    implementation 'org.thymeleaf:thymeleaf-spring6:3.1.1.RELEASE'
+
+    // Validation (Jakarta Bean Validation API & Hibernate Validator)
+    implementation 'jakarta.validation:jakarta.validation-api:3.0.2'
+    implementation 'org.hibernate.validator:hibernate-validator:7.0.5.Final'
+
+    // Servlet API
+    compileOnly 'jakarta.servlet:jakarta.servlet-api:6.0.0'
+}
+
+war {
+    archiveFileName = 'FormDky.war'
+}
+
+// Tự động build và sao chép file WAR vào thư mục webapps của Tomcat
+tasks.register('deployToTomcat', Copy) {
+    group = 'deployment'
+    description = 'Builds WAR and deploys to Tomcat webapps directory'
+    dependsOn war
+    from war.archiveFile
+    into 'D:/Application/TomCat/apache-tomcat-10.1.57-windows-x64/apache-tomcat-10.1.57/webapps'
+}
