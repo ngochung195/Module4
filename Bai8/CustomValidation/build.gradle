@@ -1,0 +1,38 @@
+plugins {
+    id 'java'
+    id 'war'
+}
+
+group = 'com.codegym'
+version = '1.0-SNAPSHOT'
+
+repositories {
+    mavenCentral()
+}
+
+java {
+    if (JavaVersion.current().isCompatibleWith(JavaVersion.VERSION_21)) {
+        sourceCompatibility = JavaVersion.VERSION_21
+        targetCompatibility = JavaVersion.VERSION_21
+    } else {
+        sourceCompatibility = JavaVersion.VERSION_17
+        targetCompatibility = JavaVersion.VERSION_17
+    }
+}
+
+tasks.withType(JavaCompile).configureEach {
+    options.compilerArgs << '-parameters'
+    options.encoding = 'UTF-8'
+}
+
+dependencies {
+    implementation 'org.springframework:spring-webmvc:6.2.6'
+    implementation 'org.thymeleaf:thymeleaf-spring6:3.1.1.RELEASE'
+    implementation 'jakarta.validation:jakarta.validation-api:3.0.2'
+    implementation 'org.hibernate.validator:hibernate-validator:7.0.5.Final'
+    compileOnly 'jakarta.servlet:jakarta.servlet-api:6.0.0'
+}
+
+war {
+    archiveFileName = 'customize-phone-validate.war'
+}
