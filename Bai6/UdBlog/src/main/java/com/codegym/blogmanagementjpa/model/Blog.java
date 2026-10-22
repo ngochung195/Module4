@@ -2,10 +2,15 @@ package com.codegym.blogmanagementjpa.model;
 
 import java.time.LocalDateTime;
 
+import org.hibernate.annotations.ManyToAny;
+
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
 @Entity
@@ -18,6 +23,8 @@ public class Blog {
 
     private String title;
     private String summary;
+
+    @Column(columnDefinition = "TEXT")
     private String content;
     private LocalDateTime createdAt;
 
@@ -76,5 +83,17 @@ public class Blog {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    @ManyToOne
+    @JoinColumn(name = "category_id")
+    private Category category;
+
+    public Category getCategory() {
+        return category;
+    }
+
+    public void setCategory(Category category) {
+        this.category = category;
     }
 }

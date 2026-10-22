@@ -31,10 +31,13 @@ dependencies {
 
     // Thymeleaf 3.1+ tích hợp Spring 6
     implementation 'org.thymeleaf:thymeleaf-spring6:3.1.2.RELEASE'
+
+    implementation 'org.springframework.data:spring-data-jpa:3.2.4'
 }
 
 tasks.withType(JavaCompile).configureEach {
     options.encoding = 'UTF-8'
+    options.compilerArgs << '-parameters'
 }
 
 war {
