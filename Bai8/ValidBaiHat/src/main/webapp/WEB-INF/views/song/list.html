@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="vi" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Danh Sách Bài Hát - Ứng Dụng Nghe Nhạc Cá Nhân</title>
+    <meta name="description" content="Quản lý và thẩm định thông tin bài hát trong ứng dụng nghe nhạc cá nhân">
+    <link rel="stylesheet" th:href="@{/css/style.css}" href="/css/style.css">
+</head>
+<body>
+
+    <!-- Header Navigation -->
+    <header class="app-header">
+        <div class="nav-container">
+            <a th:href="@{/songs}" class="logo-wrapper" id="logoLink">
+                <div class="logo-icon">
+                    <span>♫</span>
+                </div>
+                <div class="logo-text">
+                    <h1>MusicHub Studio</h1>
+                    <span>Ứng dụng nghe nhạc cá nhân</span>
+                </div>
+            </a>
+            <div class="nav-actions">
+                <a th:href="@{/songs}" class="nav-link active" id="navSongList">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18V5l12-2v13"></path><circle cx="6" cy="18" r="3"></circle><circle cx="18" cy="16" r="3"></circle></svg>
+                    Bài hát
+                </a>
+                <a th:href="@{/songs/create}" class="btn-primary" id="btnAddNewSong">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+                    Thêm bài hát mới
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="main-wrapper">
+
+        <!-- Flash Messages -->
+        <div th:if="${successMessage}" class="alert alert-success" id="successAlert">
+            <div class="alert-icon">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg>
+            </div>
+            <div class="alert-content" th:text="${successMessage}">Thao tác thành công!</div>
+            <button class="alert-close" onclick="this.parentElement.remove()">✕</button>
+        </div>
+
+        <div th:if="${errorMessage}" class="alert alert-danger" id="errorAlert">
+            <div class="alert-icon">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg>
+            </div>
+            <div class="alert-content" th:text="${errorMessage}">Đã xảy ra lỗi!</div>
+            <button class="alert-close" onclick="this.parentElement.remove()">✕</button>
+        </div>
+
+        <!-- Hero & Statistics -->
+        <section class="hero-section">
+            <div class="hero-title">
+                <h2>Kho Nhạc Cá Nhân</h2>
+                <p>Quản lý, thêm mới và chuẩn hóa thông tin các bản nhạc yêu thích</p>
+            </div>
+            <div>
+                <a th:href="@{/songs/create}" class="btn-primary" id="heroBtnCreate">
+                    <span>+ Thêm bài hát</span>
+                </a>
+            </div>
+        </section>
+
+        <!-- Stats Grid -->
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-icon">🎵</div>
+                <div class="stat-info">
+                    <div class="stat-value" id="totalSongsCount" th:text="${#lists.size(songs)}">0</div>
+                    <div class="stat-label">Tổng số bài hát</div>
+                </div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon">🎙️</div>
+                <div class="stat-info">
+                    <div class="stat-value">Validation</div>
+                    <div class="stat-label">Chuẩn hóa thông tin</div>
+                </div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon">⚡</div>
+                <div class="stat-info">
+                    <div class="stat-value">Spring MVC</div>
+                    <div class="stat-label">Module 4 - Bài 8</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Search & Filters -->
+        <div class="search-bar-wrapper">
+            <div class="search-input-box">
+                <span class="search-icon">🔍</span>
+                <input type="text" id="searchSongInput" class="search-input" placeholder="Tìm kiếm nhanh theo tên bài hát, nghệ sĩ hoặc thể loại...">
+            </div>
+        </div>
+
+        <!-- Song Table -->
+        <div class="glass-panel">
+            <div class="song-table-container">
+                <table class="song-table" id="songTable">
+                    <thead>
+                        <tr>
+                            <th style="width: 70px;">#ID</th>
+                            <th>Tên bài hát</th>
+                            <th>Nghệ sĩ thể hiện</th>
+                            <th>Thể loại nhạc</th>
+                            <th style="text-align: right; width: 180px;">Thao tác</th>
+                        </tr>
+                    </thead>
+                    <tbody id="songTableBody">
+                        <!-- Iteration over songs -->
+                        <tr th:each="song : ${songs}" class="song-row" th:id="'song-row-' + ${song.id}">
+                            <td style="color: var(--text-muted); font-weight: 600;" th:text="${'#' + song.id}">#1</td>
+                            <td>
+                                <div class="song-title-cell">
+                                    <div class="song-disc-icon">♫</div>
+                                    <div>
+                                        <span class="song-name-text" th:text="${song.name}">Tên bài hát</span>
+                                    </div>
+                                </div>
+                            </td>
+                            <td>
+                                <span class="artist-badge">
+                                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+                                    <span th:text="${song.artist}">Nghệ sĩ</span>
+                                </span>
+                            </td>
+                            <td>
+                                <div class="genre-tags">
+                                    <span th:each="g : ${#strings.arraySplit(song.genre, ',')}" 
+                                          class="genre-tag" 
+                                          th:text="${#strings.trim(g)}">Pop</span>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="actions-cell">
+                                    <a th:href="@{/songs/{id}/edit(id=${song.id})}" 
+                                       class="btn-edit" 
+                                       th:id="'edit-btn-' + ${song.id}"
+                                       title="Chỉnh sửa thông tin">
+                                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>
+                                        Sửa
+                                    </a>
+                                    <button type="button" 
+                                            class="btn-danger" 
+                                            th:id="'delete-btn-' + ${song.id}"
+                                            th:onclick="confirmDelete([[${song.id}]], [[${song.name}]])"
+                                            title="Xóa bài hát">
+                                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>
+                                        Xóa
+                                    </button>
+                                </div>
+                            </td>
+                        </tr>
+
+                        <!-- No Results row for search -->
+                        <tr id="noResultsRow" style="display: none;">
+                            <td colspan="5" style="text-align: center; padding: 3rem; color: var(--text-muted);">
+                                Không tìm thấy bài hát nào khớp với từ khóa tìm kiếm.
+                            </td>
+                        </tr>
+
+                        <!-- Empty Database Row -->
+                        <tr th:if="${#lists.isEmpty(songs)}">
+                            <td colspan="5">
+                                <div class="empty-state">
+                                    <div class="empty-icon">🎧</div>
+                                    <h3>Chưa có bài hát nào trong danh sách</h3>
+                                    <p>Hãy bắt đầu bằng cách thêm bài hát đầu tiên vào bộ sưu tập của bạn.</p>
+                                    <a th:href="@{/songs/create}" class="btn-primary" id="btnEmptyCreate">Thêm bài hát ngay</a>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </main>
+
+    <!-- Delete Confirmation Modal -->
+    <div class="modal-overlay" id="deleteModal">
+        <div class="modal-box">
+            <div class="modal-header">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg>
+                Xác nhận xóa bài hát
+            </div>
+            <div class="modal-body">
+                Bạn có chắc chắn muốn xóa bài hát <strong id="deleteSongName" style="color: #fff;"></strong> khỏi danh sách? Thao tác này không thể hoàn tác.
+            </div>
+            <div class="modal-actions">
+                <button type="button" class="btn-secondary" id="cancelDeleteBtn">Hủy bỏ</button>
+                <form id="deleteForm" method="post" style="display: inline;">
+                    <button type="submit" class="btn-danger" id="confirmDeleteSubmit">Xác nhận xóa</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="app-footer">
+        <p>Hệ thống Validate thông tin bài hát • CodeGym Module 4 (Spring MVC & Bean Validation)</p>
+    </footer>
+
+    <script th:src="@{/js/main.js}" src="/js/main.js"></script>
+</body>
+</html>

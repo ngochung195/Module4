@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="vi" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cập Nhật Bài Hát - Quản Lý Nhạc Cá Nhân</title>
+    <meta name="description" content="Cập nhật thông tin bài hát với validate dữ liệu theo chuẩn Spring Validation">
+    <link rel="stylesheet" th:href="@{/css/style.css}" href="/css/style.css">
+</head>
+<body>
+
+    <!-- Header Navigation -->
+    <header class="app-header">
+        <div class="nav-container">
+            <a th:href="@{/songs}" class="logo-wrapper" id="logoLink">
+                <div class="logo-icon">
+                    <span>♫</span>
+                </div>
+                <div class="logo-text">
+                    <h1>MusicHub Studio</h1>
+                    <span>Ứng dụng nghe nhạc cá nhân</span>
+                </div>
+            </a>
+            <div class="nav-actions">
+                <a th:href="@{/songs}" class="nav-link" id="navSongList">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18V5l12-2v13"></path><circle cx="6" cy="18" r="3"></circle><circle cx="18" cy="16" r="3"></circle></svg>
+                    Quay lại danh sách
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Container -->
+    <main class="main-wrapper">
+
+        <!-- Error Notification if Form has errors -->
+        <div th:if="${errorMessage}" class="alert alert-danger" id="formErrorAlert">
+            <div class="alert-icon">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg>
+            </div>
+            <div class="alert-content" th:text="${errorMessage}">Vui lòng kiểm tra lại thông tin nhập!</div>
+            <button class="alert-close" onclick="this.parentElement.remove()">✕</button>
+        </div>
+
+        <div class="form-layout">
+            <!-- Form Card -->
+            <div class="glass-panel form-panel">
+                <div class="form-header">
+                    <h2>Cập Nhật Thông Tin Bài Hát</h2>
+                    <p th:text="'Chỉnh sửa thông tin bài hát (Mã ID: #' + ${songId} + ')'">Chỉnh sửa thông tin bài hát</p>
+                </div>
+
+                <form th:action="@{/songs/{id}/edit(id=${songId})}" th:object="${songDto}" method="post" id="songEditForm" novalidate>
+                    <input type="hidden" th:field="*{id}">
+
+                    <!-- 1. Tên bài hát -->
+                    <div class="form-group">
+                        <div class="form-label-row">
+                            <label for="name" class="form-label">
+                                Tên bài hát <span class="req-star">*</span>
+                            </label>
+                            <span class="char-counter" id="name-count">0 / 800</span>
+                        </div>
+                        <input type="text" 
+                               id="name" 
+                               th:field="*{name}" 
+                               th:classappend="${#fields.hasErrors('name')} ? 'is-invalid' : ''"
+                               class="form-control" 
+                               placeholder="Ví dụ: Em của ngày hôm qua, Nơi này có anh..." 
+                               maxlength="800"
+                               required autofocus>
+                        <div class="form-hint">Không chứa ký tự đặc biệt (@, ;, ,, ., =, -, +, ...) và tối đa 800 ký tự.</div>
+                        <div class="error-feedback" th:if="${#fields.hasErrors('name')}" th:errors="*{name}" id="name-server-error">
+                            Lỗi tên bài hát
+                        </div>
+                    </div>
+
+                    <!-- 2. Nghệ sĩ thể hiện -->
+                    <div class="form-group">
+                        <div class="form-label-row">
+                            <label for="artist" class="form-label">
+                                Nghệ sĩ thể hiện <span class="req-star">*</span>
+                            </label>
+                            <span class="char-counter" id="artist-count">0 / 300</span>
+                        </div>
+                        <input type="text" 
+                               id="artist" 
+                               th:field="*{artist}" 
+                               th:classappend="${#fields.hasErrors('artist')} ? 'is-invalid' : ''"
+                               class="form-control" 
+                               placeholder="Ví dụ: Sơn Tùng MTP, Đen Vâu, Hoàng Thùy Linh..." 
+                               maxlength="300"
+                               required>
+                        <div class="form-hint">Không chứa ký tự đặc biệt (@, ;, ,, ., =, -, +, ...) và tối đa 300 ký tự.</div>
+                        <div class="error-feedback" th:if="${#fields.hasErrors('artist')}" th:errors="*{artist}" id="artist-server-error">
+                            Lỗi nghệ sĩ thể hiện
+                        </div>
+                    </div>
+
+                    <!-- 3. Thể loại nhạc -->
+                    <div class="form-group">
+                        <div class="form-label-row">
+                            <label for="genre" class="form-label">
+                                Thể loại nhạc (nhập dạng text) <span class="req-star">*</span>
+                            </label>
+                            <span class="char-counter" id="genre-count">0 / 1000</span>
+                        </div>
+                        <input type="text" 
+                               id="genre" 
+                               th:field="*{genre}" 
+                               th:classappend="${#fields.hasErrors('genre')} ? 'is-invalid' : ''"
+                               class="form-control" 
+                               placeholder="Ví dụ: Pop, Ballad, R and B (phân tách bởi dấu phẩy)" 
+                               maxlength="1000"
+                               required>
+                        <div class="form-hint">Cho phép dấu phẩy (,) để phân cách các thể loại. Không chứa ký tự đặc biệt khác.</div>
+                        <div class="error-feedback" th:if="${#fields.hasErrors('genre')}" th:errors="*{genre}" id="genre-server-error">
+                            Lỗi thể loại nhạc
+                        </div>
+
+                        <!-- Quick suggestion tags -->
+                        <div class="quick-tags">
+                            <span style="font-size: 0.78rem; color: var(--text-muted); align-self: center;">Gợi ý nhanh:</span>
+                            <button type="button" class="quick-tag-btn" data-tag="Pop">+ Pop</button>
+                            <button type="button" class="quick-tag-btn" data-tag="Ballad">+ Ballad</button>
+                            <button type="button" class="quick-tag-btn" data-tag="Rap">+ Rap</button>
+                            <button type="button" class="quick-tag-btn" data-tag="Hip Hop">+ Hip Hop</button>
+                            <button type="button" class="quick-tag-btn" data-tag="R and B">+ R and B</button>
+                            <button type="button" class="quick-tag-btn" data-tag="Indie">+ Indie</button>
+                            <button type="button" class="quick-tag-btn" data-tag="Acoustic">+ Acoustic</button>
+                            <button type="button" class="quick-tag-btn" data-tag="Rock">+ Rock</button>
+                        </div>
+                    </div>
+
+                    <!-- Form Actions -->
+                    <div class="form-actions">
+                        <button type="submit" class="btn-primary" id="btnUpdateSong">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                            Cập nhật bài hát
+                        </button>
+                        <a th:href="@{/songs}" class="btn-secondary" id="btnCancelEdit">Hủy bỏ</a>
+                    </div>
+                </form>
+            </div>
+
+            <!-- Rules & Live Preview Sidebar -->
+            <div class="rules-sidebar">
+                <div class="rules-card">
+                    <div class="rules-header">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
+                        Quy định Validate
+                    </div>
+
+                    <div class="rule-item">
+                        <h4>1. Tên bài hát</h4>
+                        <ul>
+                            <li>Bắt buộc nhập (không để trống).</li>
+                            <li>Không vượt quá 800 ký tự.</li>
+                            <li>Không chứa các kí tự đặc biệt như: <code>@ ; , . = - + ...</code></li>
+                        </ul>
+                    </div>
+
+                    <div class="rule-item">
+                        <h4>2. Nghệ sĩ thể hiện</h4>
+                        <ul>
+                            <li>Bắt buộc nhập (không để trống).</li>
+                            <li>Không vượt quá 300 ký tự.</li>
+                            <li>Không chứa các kí tự đặc biệt như: <code>@ ; , . = - + ...</code></li>
+                        </ul>
+                    </div>
+
+                    <div class="rule-item">
+                        <h4>3. Thể loại nhạc (Text)</h4>
+                        <ul>
+                            <li>Bắt buộc nhập (không để trống).</li>
+                            <li>Không vượt quá 1000 ký tự.</li>
+                            <li><strong>Chỉ cho phép dấu phẩy <code>,</code></strong> để phân cách các thể loại.</li>
+                        </ul>
+                    </div>
+
+                    <!-- Live Preview of input -->
+                    <div class="live-preview">
+                        <span class="preview-badge">Xem trước thẻ bài hát</span>
+                        <div class="preview-title" id="preview-title">Tên bài hát hiển thị ở đây</div>
+                        <div class="preview-artist" id="preview-artist">Nghệ sĩ thể hiện</div>
+                        <div class="genre-tags" id="preview-genre">
+                            <span class="genre-tag">Thể loại</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="app-footer">
+        <p>Hệ thống Validate thông tin bài hát • CodeGym Module 4 (Spring MVC & Bean Validation)</p>
+    </footer>
+
+    <script th:src="@{/js/main.js}" src="/js/main.js"></script>
+</body>
+</html>

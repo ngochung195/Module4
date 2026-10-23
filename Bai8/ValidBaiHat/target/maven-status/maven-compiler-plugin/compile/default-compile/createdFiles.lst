@@ -1,0 +1,8 @@
+com\codegym\validsong\service\ISongService.class
+com\codegym\validsong\configuration\AppConfiguration.class
+com\codegym\validsong\controller\SongController.class
+com\codegym\validsong\configuration\AppInitializer.class
+com\codegym\validsong\model\Song.class
+com\codegym\validsong\dto\SongDto.class
+com\codegym\validsong\MainApp.class
+com\codegym\validsong\service\SongService.class
