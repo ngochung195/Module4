@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{layout :: head('Lỗi Hệ Thống')}"></head>
+<body>
+
+<header th:replace="~{layout :: navbar}"></header>
+
+<main class="container my-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-6">
+            <div class="card card-custom text-center p-4 p-md-5 border-top border-5 border-danger">
+                <div class="mb-4">
+                    <div class="d-inline-flex align-items-center justify-content-center bg-danger-subtle text-danger rounded-circle shadow-sm" style="width: 80px; height: 80px;">
+                        <i class="bi bi-exclamation-triangle-fill fs-1"></i>
+                    </div>
+                </div>
+
+                <h3 class="fw-bold text-dark mb-3">Đã Xảy Ra Lỗi</h3>
+
+                <div class="alert alert-danger text-start p-3 mb-4">
+                    <p class="mb-0" th:text="${errorMessage}">Đã xảy ra lỗi trong quá trình xử lý yêu cầu.</p>
+                </div>
+
+                <div class="d-flex justify-content-center gap-3">
+                    <a th:href="@{/books}" class="btn btn-primary px-4">
+                        <i class="bi bi-house me-1"></i> Về kho sách
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+
+<footer th:replace="~{layout :: footer}"></footer>
+
+</body>
+</html>

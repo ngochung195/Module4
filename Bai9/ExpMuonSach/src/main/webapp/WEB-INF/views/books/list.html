@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{layout :: head('Danh Sách Đầu Sách - Thư Viện')}"></head>
+<body>
+
+<header th:replace="~{layout :: navbar}"></header>
+
+<main class="container my-4">
+    <!-- Header Hero Banner -->
+    <div class="p-4 mb-4 bg-white rounded-3 shadow-sm border border-light">
+        <div class="row align-items-center">
+            <div class="col-md-8">
+                <h2 class="fw-bold text-primary mb-2">
+                    <i class="bi bi-journal-bookmark-fill me-2"></i>Kho Sách Thư Viện
+                </h2>
+                <p class="text-secondary mb-0">
+                    Chào mừng bạn đến với hệ thống thư viện. Hãy chọn cuốn sách bạn muốn đọc và nhấn mượn để nhận mã mượn sách 5 chữ số!
+                </p>
+            </div>
+            <div class="col-md-4 text-md-end mt-3 mt-md-0">
+                <a th:href="@{/books/return}" class="btn btn-outline-primary me-2">
+                    <i class="bi bi-arrow-counterclockwise me-1"></i> Trả sách
+                </a>
+                <span class="badge bg-primary fs-6 p-2">
+                    <i class="bi bi-eye-fill me-1"></i> <span th:text="${visitorCount}">0</span> lượt thao tác
+                </span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Book Grid / Table Card -->
+    <div class="card card-custom mb-5">
+        <div class="card-header bg-white py-3 d-flex justify-content-between align-items-center border-bottom">
+            <h5 class="mb-0 fw-semibold text-dark">
+                <i class="bi bi-grid-3x3-gap-fill text-primary me-2"></i>Các Đầu Sách Hiện Có
+            </h5>
+            <span class="badge bg-light text-secondary border" th:text="${#lists.size(books)} + ' đầu sách'">0 đầu sách</span>
+        </div>
+        <div class="card-body p-0">
+            <div class="table-responsive">
+                <table class="table table-hover align-middle mb-0">
+                    <thead class="table-light text-secondary text-uppercase fs-7">
+                        <tr>
+                            <th class="ps-4" style="width: 80px;">ID</th>
+                            <th>Tên Cuốn Sách</th>
+                            <th>Tác Giả</th>
+                            <th class="text-center" style="width: 160px;">Số Lượng Còn Lại</th>
+                            <th>Tóm Tắt</th>
+                            <th class="text-center pe-4" style="width: 180px;">Hành Động</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr th:each="book : ${books}">
+                            <td class="ps-4 fw-bold text-muted" th:text="'#' + ${book.id}">#1</td>
+                            <td>
+                                <a th:href="@{/books/{id}(id=${book.id})}" class="fw-bold text-decoration-none text-dark">
+                                    <span th:text="${book.title}">Tên Sách</span>
+                                </a>
+                            </td>
+                            <td>
+                                <span class="badge bg-light text-dark border">
+                                    <i class="bi bi-person me-1"></i><span th:text="${book.author}">Tác giả</span>
+                                </span>
+                            </td>
+                            <td class="text-center">
+                                <span th:if="${book.quantity > 0}" class="badge bg-success-subtle text-success border border-success-subtle px-3 py-2 fs-6">
+                                    <i class="bi bi-check-circle me-1"></i><span th:text="${book.quantity}">0</span> cuốn
+                                </span>
+                                <span th:if="${book.quantity == 0}" class="badge bg-danger-subtle text-danger border border-danger-subtle px-3 py-2 fs-6">
+                                    <i class="bi bi-exclamation-triangle me-1"></i>Hết sách (0)
+                                </span>
+                            </td>
+                            <td class="text-muted small" style="max-width: 320px;">
+                                <span th:text="${#strings.abbreviate(book.description, 90)}">Mô tả</span>
+                            </td>
+                            <td class="text-center pe-4">
+                                <a th:href="@{/books/{id}(id=${book.id})}" class="btn btn-sm btn-primary px-3 shadow-sm">
+                                    <i class="bi bi-box-arrow-up-right me-1"></i> Chi tiết & Mượn
+                                </a>
+                            </td>
+                        </tr>
+                        <tr th:if="${#lists.isEmpty(books)}">
+                            <td colspan="6" class="text-center py-5 text-muted">
+                                <i class="bi bi-inbox fs-1 d-block mb-2 text-secondary"></i>
+                                Hiện tại chưa có đầu sách nào trong hệ thống.
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <!-- Active Borrowed Codes Card (Useful for instructors and testers) -->
+    <div class="card card-custom border-top border-4 border-warning">
+        <div class="card-header bg-white py-3 d-flex justify-content-between align-items-center">
+            <div>
+                <h5 class="mb-0 fw-semibold text-dark">
+                    <i class="bi bi-ticket-perforated-fill text-warning me-2"></i>Mã Mượn Đang Được Mượn (Chưa Trả)
+                </h5>
+                <small class="text-muted">Danh sách hỗ trợ kiểm thử tiện lợi: lấy mã mượn tại đây để test chức năng Trả Sách.</small>
+            </div>
+            <span class="badge bg-warning text-dark px-3 py-2" th:text="${#lists.size(activeBorrows)} + ' cuốn đang mượn'">0 cuốn</span>
+        </div>
+        <div class="card-body p-0">
+            <div class="table-responsive">
+                <table class="table table-hover align-middle mb-0">
+                    <thead class="table-light text-secondary">
+                        <tr>
+                            <th class="ps-4">Mã Mượn Sách (5 số)</th>
+                            <th>Cuốn Sách Mượn</th>
+                            <th>Thời Gian Mượn</th>
+                            <th>Trạng Thái</th>
+                            <th class="text-end pe-4">Hành Động</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr th:each="record : ${activeBorrows}">
+                            <td class="ps-4">
+                                <span class="badge bg-primary-subtle text-primary border border-primary-subtle fs-6 px-3 py-1 font-monospace fw-bold" th:text="${record.borrowCode}">12345</span>
+                            </td>
+                            <td>
+                                <strong th:text="${record.book.title}">Tên sách</strong>
+                                <span class="text-muted small" th:text="' - ' + ${record.book.author}"></span>
+                            </td>
+                            <td class="text-muted small" th:text="${#temporals.format(record.borrowDate, 'dd/MM/yyyy HH:mm:ss')}">01/01/2026</td>
+                            <td>
+                                <span class="badge bg-warning-subtle text-warning-emphasis border border-warning-subtle">
+                                    <i class="bi bi-clock-history me-1"></i> Đang mượn
+                                </span>
+                            </td>
+                            <td class="text-end pe-4">
+                                <a th:href="@{/books/return(code=${record.borrowCode})}" class="btn btn-sm btn-outline-success">
+                                    <i class="bi bi-check2-circle me-1"></i> Đi trả mã này
+                                </a>
+                            </td>
+                        </tr>
+                        <tr th:if="${#lists.isEmpty(activeBorrows)}">
+                            <td colspan="5" class="text-center py-4 text-muted">
+                                Hiện không có sách nào đang được mượn. Hãy chọn một cuốn sách phía trên để mượn!
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</main>
+
+<footer th:replace="~{layout :: footer}"></footer>
+
+</body>
+</html>

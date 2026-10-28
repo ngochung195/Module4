@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{layout :: head('Lỗi: Sách Đã Hết')}"></head>
+<body>
+
+<header th:replace="~{layout :: navbar}"></header>
+
+<main class="container my-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-6">
+            <div class="card card-custom text-center p-4 p-md-5 border-top border-5 border-danger">
+                <div class="mb-4">
+                    <div class="d-inline-flex align-items-center justify-content-center bg-danger-subtle text-danger rounded-circle shadow-sm" style="width: 80px; height: 80px;">
+                        <i class="bi bi-x-octagon-fill fs-1"></i>
+                    </div>
+                </div>
+
+                <span class="badge bg-danger text-white px-3 py-2 text-uppercase mb-2">OutOfStockException</span>
+                <h3 class="fw-bold text-dark mb-3">Không Thể Mượn Sách!</h3>
+
+                <div class="alert alert-danger text-start p-3 mb-4">
+                    <div class="d-flex align-items-center gap-2 mb-2">
+                        <i class="bi bi-exclamation-triangle-fill fs-5"></i>
+                        <strong class="fs-6">Thông báo hệ thống:</strong>
+                    </div>
+                    <p class="mb-0 text-danger-emphasis" th:text="${errorMessage}">
+                        Số lượng sách đã hết (bằng 0), không thể mượn thêm cuốn sách này!
+                    </p>
+                </div>
+
+                <div class="bg-light p-3 rounded-3 text-start small text-muted mb-4 border">
+                    <p class="mb-1"><strong><i class="bi bi-gear-fill me-1"></i> Cơ chế AOP & Exception:</strong></p>
+                    <ul class="mb-0 ps-3">
+                        <li>Hệ thống phát hiện số lượng sách còn lại = 0.</li>
+                        <li>Ngoại lệ <code>OutOfStockException</code> được kích hoạt và chặn việc mượn sách.</li>
+                        <li>Advice <code>@AfterThrowing</code> trong AOP đã ghi log ngoại lệ này vào hệ thống.</li>
+                    </ul>
+                </div>
+
+                <div class="d-flex justify-content-center gap-3">
+                    <a th:href="@{/books}" class="btn btn-primary px-4">
+                        <i class="bi bi-arrow-left me-1"></i> Quay lại danh sách sách
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+
+<footer th:replace="~{layout :: footer}"></footer>
+
+</body>
+</html>

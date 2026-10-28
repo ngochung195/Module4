@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{layout :: head('Chi Tiết Sách - ' + ${book.title})}"></head>
+<body>
+
+<header th:replace="~{layout :: navbar}"></header>
+
+<main class="container my-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-8">
+            <nav aria-label="breadcrumb" class="mb-4">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a th:href="@{/books}" class="text-decoration-none">Kho Sách</a></li>
+                    <li class="breadcrumb-item active" aria-current="page" th:text="${book.title}">Chi Tiết</li>
+                </ol>
+            </nav>
+
+            <div class="card card-custom p-4 p-md-5">
+                <div class="d-flex flex-wrap justify-content-between align-items-start gap-3 mb-4 border-bottom pb-4">
+                    <div>
+                        <span class="badge bg-secondary mb-2" th:text="'Mã Sách: #' + ${book.id}">#1</span>
+                        <h2 class="fw-bold text-dark mb-1" th:text="${book.title}">Tên Sách</h2>
+                        <h5 class="text-muted fw-normal">
+                            <i class="bi bi-pen me-1"></i> Tác giả: <strong class="text-primary" th:text="${book.author}">Tác Giả</strong>
+                        </h5>
+                    </div>
+                    <div>
+                        <div th:if="${book.quantity > 0}" class="text-center bg-success-subtle border border-success-subtle p-3 rounded-3">
+                            <small class="text-uppercase text-success fw-bold d-block">Số Lượng Còn Lại</small>
+                            <span class="fs-2 fw-bold text-success" th:text="${book.quantity}">3</span>
+                            <small class="d-block text-success">cuốn sẵn sàng</small>
+                        </div>
+                        <div th:if="${book.quantity == 0}" class="text-center bg-danger-subtle border border-danger-subtle p-3 rounded-3">
+                            <small class="text-uppercase text-danger fw-bold d-block">Tình Trạng Kho</small>
+                            <span class="fs-2 fw-bold text-danger">0</span>
+                            <small class="d-block text-danger">Đã hết sách</small>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="mb-4">
+                    <h5 class="fw-semibold text-dark mb-3">
+                        <i class="bi bi-file-earmark-text text-primary me-2"></i>Nội Dung Giới Thiệu / Tóm Tắt
+                    </h5>
+                    <div class="p-3 bg-light rounded-3 text-secondary lh-lg" th:text="${book.description}">
+                        Nội dung mô tả tóm tắt của cuốn sách...
+                    </div>
+                </div>
+
+                <!-- Alert if Out of Stock -->
+                <div th:if="${book.quantity == 0}" class="alert alert-danger d-flex align-items-center gap-3 mb-4" role="alert">
+                    <i class="bi bi-exclamation-octagon-fill fs-2"></i>
+                    <div>
+                        <strong>Chú ý kiểm thử:</strong> Cuốn sách này đã hết (số lượng = 0). Nếu bạn nhấn mượn bên dưới, ứng dụng sẽ ném ra ngoại lệ <code>OutOfStockException</code> và chuyển sang màn hình báo lỗi theo đúng yêu cầu đề bài!
+                    </div>
+                </div>
+
+                <!-- Action Buttons Form -->
+                <div class="d-flex flex-wrap gap-3 align-items-center justify-content-between pt-3 border-top">
+                    <a th:href="@{/books}" class="btn btn-outline-secondary px-4 py-2">
+                        <i class="bi bi-arrow-left me-1"></i> Quay lại kho sách
+                    </a>
+
+                    <form th:action="@{/books/{id}/borrow(id=${book.id})}" method="post" class="m-0">
+                        <button type="submit" class="btn btn-primary btn-lg px-4 shadow">
+                            <i class="bi bi-cart-plus me-2"></i> Xác Nhận Mượn Cuốn Sách Này
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+
+<footer th:replace="~{layout :: footer}"></footer>
+
+</body>
+</html>

@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{layout :: head('Mượn Sách Thành Công')}"></head>
+<body>
+
+<header th:replace="~{layout :: navbar}"></header>
+
+<main class="container my-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-7">
+            <div class="card card-custom text-center p-4 p-md-5 border-top border-5 border-success">
+                <div class="mb-4">
+                    <div class="d-inline-flex align-items-center justify-content-center bg-success text-white rounded-circle shadow-sm" style="width: 80px; height: 80px;">
+                        <i class="bi bi-check-lg fs-1"></i>
+                    </div>
+                </div>
+
+                <h2 class="fw-bold text-success mb-2">Mượn Sách Thành Công!</h2>
+                <p class="text-secondary mb-4">
+                    Hệ thống đã ghi nhận việc mượn sách và giảm số lượng sách trong kho xuống 1. Đồng thời ghi log AOP trạng thái sách đã thay đổi.
+                </p>
+
+                <div class="bg-light rounded-4 p-4 mb-4 border">
+                    <span class="text-uppercase text-muted fw-bold small d-block mb-2">Mã Số Mượn Sách Ngẫu Nhiên Của Bạn</span>
+                    <div class="code-display my-2" th:text="${borrowCode}">
+                        58291
+                    </div>
+                    <div class="mt-2 text-danger small">
+                        <i class="bi bi-info-circle-fill me-1"></i> <strong>Quan trọng:</strong> Vui lòng ghi nhớ hoặc chụp lại mã 5 chữ số này để dùng khi trả sách!
+                    </div>
+                </div>
+
+                <div th:if="${book != null}" class="text-start bg-body-tertiary p-3 rounded-3 mb-4 border">
+                    <h6 class="fw-bold text-dark mb-2">Thông tin cuốn sách mượn:</h6>
+                    <ul class="list-unstyled mb-0 small text-secondary">
+                        <li><strong>Tên sách:</strong> <span th:text="${book.title}">Tên sách</span></li>
+                        <li><strong>Tác giả:</strong> <span th:text="${book.author}">Tác giả</span></li>
+                        <li><strong>Số lượng còn lại trong kho:</strong> <span th:text="${book.quantity}">0</span> cuốn</li>
+                    </ul>
+                </div>
+
+                <div class="d-flex justify-content-center gap-3">
+                    <a th:href="@{/books}" class="btn btn-outline-secondary px-4">
+                        <i class="bi bi-house me-1"></i> Về kho sách
+                    </a>
+                    <a th:href="@{/books/return(code=${borrowCode})}" class="btn btn-success px-4">
+                        <i class="bi bi-arrow-return-left me-1"></i> Đến trang trả sách
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+
+<footer th:replace="~{layout :: footer}"></footer>
+
+</body>
+</html>

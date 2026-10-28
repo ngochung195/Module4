@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{layout :: head('Trả Sách - Thư Viện')}"></head>
+<body>
+
+<header th:replace="~{layout :: navbar}"></header>
+
+<main class="container my-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-6">
+            <div class="card card-custom p-4 p-md-5 mb-5 border-top border-5 border-primary">
+                <div class="text-center mb-4">
+                    <div class="d-inline-flex align-items-center justify-content-center bg-primary-subtle text-primary rounded-circle mb-3" style="width: 70px; height: 70px;">
+                        <i class="bi bi-box-arrow-in-down-left fs-2"></i>
+                    </div>
+                    <h3 class="fw-bold text-dark">Thủ Tục Trả Sách</h3>
+                    <p class="text-secondary small">
+                        Điền mã số mượn sách gồm 5 chữ số mà bạn đã nhận khi mượn sách. Hệ thống sẽ tăng lại số lượng sách trong kho lên 1 và ghi log trạng thái.
+                    </p>
+                </div>
+
+                <form th:action="@{/books/return}" method="post">
+                    <div class="mb-4">
+                        <label for="borrowCode" class="form-label fw-bold text-dark">Mã Mượn Sách (5 Chữ Số):</label>
+                        <div class="input-group input-group-lg">
+                            <span class="input-group-text bg-light text-primary">
+                                <i class="bi bi-key-fill"></i>
+                            </span>
+                            <input type="text" 
+                                   id="borrowCode" 
+                                   name="borrowCode" 
+                                   class="form-control font-monospace text-center fs-4 letter-spacing-2" 
+                                   placeholder="Ví dụ: 58291" 
+                                   th:value="${param.code}" 
+                                   maxlength="10" 
+                                   required 
+                                   autofocus>
+                        </div>
+                        <div class="form-text text-muted">
+                            <i class="bi bi-info-circle me-1"></i> Gợi ý: Nếu nhập sai mã số hoặc mã đã trả, hệ thống sẽ báo lỗi theo đúng yêu cầu bài học.
+                        </div>
+                    </div>
+
+                    <div class="d-grid gap-2">
+                        <button type="submit" class="btn btn-primary btn-lg shadow-sm">
+                            <i class="bi bi-check2-circle me-1"></i> Xác Nhận Trả Sách
+                        </button>
+                        <a th:href="@{/books}" class="btn btn-outline-secondary">
+                            <i class="bi bi-arrow-left me-1"></i> Quay lại kho sách
+                        </a>
+                    </div>
+                </form>
+            </div>
+
+            <!-- Reference Table of Active Borrow Codes -->
+            <div class="card card-custom">
+                <div class="card-header bg-white py-3">
+                    <h6 class="mb-0 fw-bold text-dark">
+                        <i class="bi bi-list-check text-primary me-2"></i>Danh Sách Mã Sách Đang Được Mượn (Tham Khảo)
+                    </h6>
+                </div>
+                <div class="card-body p-0">
+                    <div class="table-responsive">
+                        <table class="table table-sm table-hover align-middle mb-0">
+                            <thead class="table-light small">
+                                <tr>
+                                    <th class="ps-3">Mã 5 số</th>
+                                    <th>Tên sách</th>
+                                    <th class="text-end pe-3">Chọn</th>
+                                </tr>
+                            </thead>
+                            <tbody class="small">
+                                <tr th:each="record : ${activeBorrows}">
+                                    <td class="ps-3">
+                                        <span class="badge bg-primary font-monospace" th:text="${record.borrowCode}">12345</span>
+                                    </td>
+                                    <td th:text="${record.book.title}">Tên sách</td>
+                                    <td class="text-end pe-3">
+                                        <button type="button" class="btn btn-xs btn-outline-primary py-0 px-2"
+                                                th:onclick="'document.getElementById(\'borrowCode\').value=\'' + ${record.borrowCode} + '\';'">
+                                            Điền mã này
+                                        </button>
+                                    </td>
+                                </tr>
+                                <tr th:if="${#lists.isEmpty(activeBorrows)}">
+                                    <td colspan="3" class="text-center py-3 text-muted">
+                                        Hiện không có sách nào đang mượn.
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+
+<footer th:replace="~{layout :: footer}"></footer>
+
+</body>
+</html>
