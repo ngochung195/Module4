@@ -686,6 +686,10 @@
             <div class="form-group">
                 <label for="feedback">Lời nhận xét:</label>
                 <textarea id="feedback" th:field="*{feedback}" placeholder="Chia sẻ cảm nhận của bạn về bức ảnh hôm nay..." required></textarea>
+                <div th:if="${badWords != null}" style="margin-top: 0.45rem; font-size: 0.8rem; color: #94a3b8;">
+                    🛡️ <em>Bộ lọc từ xấu đang bật (Spring AOP &amp; ExceptionHandler):</em>
+                    <span th:text="${#strings.listJoin(badWords, ', ')}"></span>
+                </div>
             </div>
 
             <button type="submit" class="btn-submit">Gửi đánh giá</button>

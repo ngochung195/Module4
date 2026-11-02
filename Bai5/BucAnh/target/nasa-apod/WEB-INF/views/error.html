@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="vi" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cảnh Báo Vi Phạm Nội Dung - NASA APOD</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-gradient: linear-gradient(135deg, #0b0f19 0%, #111827 50%, #3b0764 100%);
+            --card-bg: rgba(255, 255, 255, 0.05);
+            --card-border: rgba(239, 68, 68, 0.35);
+            --danger: #ef4444;
+            --danger-soft: rgba(239, 68, 68, 0.15);
+            --primary: #6366f1;
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+        }
+
+        body {
+            background: var(--bg-gradient);
+            color: var(--text-main);
+            min-height: 100vh;
+            padding: 2rem 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .error-container {
+            max-width: 640px;
+            width: 100%;
+            background: var(--card-bg);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid var(--card-border);
+            border-radius: 1.25rem;
+            padding: 2.25rem;
+            box-shadow: 0 20px 45px -15px rgba(0, 0, 0, 0.65);
+        }
+
+        .badge-error {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+            background: var(--danger-soft);
+            color: #fca5a5;
+            border: 1px solid rgba(239, 68, 68, 0.4);
+            padding: 0.35rem 0.9rem;
+            border-radius: 9999px;
+            font-size: 0.82rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-bottom: 1rem;
+        }
+
+        h1 {
+            font-size: 1.75rem;
+            font-weight: 800;
+            color: #fef2f2;
+            margin-bottom: 0.75rem;
+        }
+
+        .subtitle {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+            line-height: 1.6;
+            margin-bottom: 1.5rem;
+        }
+
+        .error-alert {
+            background: rgba(239, 68, 68, 0.12);
+            border-left: 4px solid var(--danger);
+            padding: 1rem 1.25rem;
+            border-radius: 0.5rem;
+            color: #fecaca;
+            font-weight: 600;
+            font-size: 0.95rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .details-box {
+            background: rgba(15, 23, 42, 0.65);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 0.85rem;
+            padding: 1.25rem;
+            margin-bottom: 1.5rem;
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+        }
+
+        .detail-row {
+            display: flex;
+            justify-content: space-between;
+            gap: 1rem;
+            font-size: 0.9rem;
+            border-bottom: 1px dashed rgba(255, 255, 255, 0.08);
+            padding-bottom: 0.6rem;
+        }
+
+        .detail-row:last-child {
+            border-bottom: none;
+            padding-bottom: 0;
+        }
+
+        .detail-label {
+            color: var(--text-muted);
+            font-weight: 600;
+            white-space: nowrap;
+        }
+
+        .detail-value {
+            color: #f1f5f9;
+            font-weight: 500;
+            text-align: right;
+            word-break: break-word;
+        }
+
+        .bad-word-highlight {
+            background: rgba(239, 68, 68, 0.25);
+            color: #fca5a5;
+            padding: 0.15rem 0.55rem;
+            border-radius: 0.35rem;
+            font-weight: 700;
+        }
+
+        .bad-words-section {
+            margin-bottom: 1.75rem;
+        }
+
+        .bad-words-title {
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: var(--text-muted);
+            margin-bottom: 0.6rem;
+        }
+
+        .bad-words-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.4rem;
+        }
+
+        .word-tag {
+            background: rgba(255, 255, 255, 0.06);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            color: #cbd5e1;
+            font-size: 0.78rem;
+            padding: 0.25rem 0.6rem;
+            border-radius: 0.4rem;
+        }
+
+        .actions {
+            display: flex;
+            justify-content: flex-end;
+        }
+
+        .btn-back {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: linear-gradient(135deg, #6366f1, #ec4899);
+            color: #fff;
+            text-decoration: none;
+            padding: 0.75rem 1.5rem;
+            border-radius: 0.6rem;
+            font-weight: 600;
+            font-size: 0.92rem;
+            transition: transform 0.15s, opacity 0.2s;
+            box-shadow: 0 4px 15px rgba(99, 102, 241, 0.35);
+        }
+
+        .btn-back:hover {
+            opacity: 0.92;
+            transform: translateY(-1px);
+        }
+    </style>
+</head>
+<body>
+
+<div class="error-container">
+    <div class="badge-error">🚫 Spring ExceptionHandler &amp; AOP Logger</div>
+    <h1>Phát hiện từ ngữ không phù hợp!</h1>
+    <p class="subtitle">
+        Hệ thống kiểm duyệt tự động đã từ chối lưu bình luận của bạn. Thông tin vi phạm đã được ghi nhận vào hệ thống Log thông qua <strong>Spring AOP</strong>.
+    </p>
+
+    <div class="error-alert" th:text="${errorMessage}">
+        Nội dung bình luận có chứa từ ngữ không phù hợp.
+    </div>
+
+    <div class="details-box">
+        <div class="detail-row">
+            <span class="detail-label">Từ ngữ vi phạm:</span>
+            <span class="detail-value">
+                <span class="bad-word-highlight" th:text="${badWord}">xấu</span>
+            </span>
+        </div>
+        <div class="detail-row">
+            <span class="detail-label">Tác giả (Author):</span>
+            <span class="detail-value" th:text="${author}">Nguyễn Văn A</span>
+        </div>
+        <div class="detail-row">
+            <span class="detail-label">Nội dung Feedback:</span>
+            <span class="detail-value" th:text="${feedbackContent}">Nội dung vi phạm</span>
+        </div>
+        <div class="detail-row">
+            <span class="detail-label">Thời gian ghi Log:</span>
+            <span class="detail-value" th:text="${timestamp}">02/11/2026 14:05:00</span>
+        </div>
+    </div>
+
+    <div class="bad-words-section" th:if="${badWords != null}">
+        <div class="bad-words-title">Danh sách các từ ngữ bị chặn bởi bộ lọc:</div>
+        <div class="bad-words-tags">
+            <span class="word-tag" th:each="word : ${badWords}" th:text="${word}">từ xấu</span>
+        </div>
+    </div>
+
+    <div class="actions">
+        <a th:href="@{/}" class="btn-back">&larr; Quay lại trang chủ</a>
+    </div>
+</div>
+
+</body>
+</html>
+

@@ -20,8 +20,11 @@ dependencies {
     // Jakarta Servlet API
     compileOnly 'jakarta.servlet:jakarta.servlet-api:6.0.0'
 
-    // Spring MVC & ORM (Spring 6)
+    // Spring MVC, AOP & ORM (Spring 6)
     implementation "org.springframework:spring-webmvc:${springVersion}"
+    implementation "org.springframework:spring-aop:${springVersion}"
+    implementation "org.springframework:spring-aspects:${springVersion}"
+    implementation "org.aspectj:aspectjweaver:1.9.22"
     implementation "org.springframework:spring-orm:${springVersion}"
     implementation "org.springframework:spring-tx:${springVersion}"
     implementation "org.springframework.data:spring-data-jpa:3.2.11"

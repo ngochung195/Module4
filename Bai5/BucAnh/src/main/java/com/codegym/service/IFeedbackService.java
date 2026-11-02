@@ -1,5 +1,6 @@
 package com.codegym.service;
 
+import com.codegym.exception.BadWordException;
 import com.codegym.model.Feedback;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -17,4 +18,9 @@ public interface IFeedbackService extends IGenerateService<Feedback> {
     List<Feedback> findAllByDate(LocalDate date);
 
     void like(Long id);
+
+    @Override
+    void save(Feedback feedback) throws BadWordException;
+
+    List<String> getBadWords();
 }
