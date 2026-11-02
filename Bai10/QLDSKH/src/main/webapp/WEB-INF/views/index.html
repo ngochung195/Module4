@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Customer List</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        table { border-collapse: collapse; width: 100%; margin-top: 15px; }
+        th, td { border: 1px solid #ddd; padding: 8px; text-align: left; }
+        th { background-color: #4CAF50; color: white; }
+        tr:nth-child(even) { background-color: #f2f2f2; }
+        .notify { color: green; margin-bottom: 10px; }
+    </style>
+</head>
+<body>
+<h3>Customers</h3>
+<p>
+    <a th:href="@{/customers/create}">Add new customer</a>
+</p>
+<div class="notify">
+    <div th:if="${success}">
+        <span th:text="${success}"></span>
+    </div>
+</div>
+<table>
+    <thead>
+    <tr>
+        <th>Id</th>
+        <th>Name</th>
+        <th>Email</th>
+        <th>Address</th>
+        <th>Edit</th>
+        <th>Delete</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="c : ${customers}">
+        <td th:text="${c.id}"></td>
+        <td><a th:href="@{/customers/info/{id}(id=${c.id})}" th:text="${c.name}"></a></td>
+        <td th:text="${c.email}"></td>
+        <td th:text="${c.address}"></td>
+        <td><a th:href="@{/customers/{id}/edit(id=${c.id})}">edit</a></td>
+        <td><a th:href="@{/customers/{id}/delete(id=${c.id})}">delete</a></td>
+    </tr>
+    </tbody>
+</table>
+</body>
+</html>
+

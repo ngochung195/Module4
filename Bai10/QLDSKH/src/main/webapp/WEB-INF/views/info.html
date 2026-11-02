@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Customer Information</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        fieldset { width: 400px; padding: 15px; }
+        table td { padding: 5px; }
+    </style>
+</head>
+<body>
+<h3>Customer Information</h3>
+<p>
+    <a th:href="@{/customers}">Back to customer list</a>
+</p>
+<form th:action="@{/customers/update}" th:object="${customer}" method="post">
+    <fieldset>
+        <legend>Customer Information</legend>
+        <input type="hidden" th:field="*{id}">
+        <table>
+            <tr>
+                <td>Id</td>
+                <td th:text="*{id}"></td>
+            </tr>
+            <tr>
+                <td>Name</td>
+                <td><input type="text" th:field="*{name}"></td>
+            </tr>
+            <tr>
+                <td>Email</td>
+                <td><input type="text" th:field="*{email}"></td>
+            </tr>
+            <tr>
+                <td>Address</td>
+                <td><input type="text" th:field="*{address}"></td>
+            </tr>
+            <tr>
+                <td colspan="2"><input type="submit" value="Update"></td>
+            </tr>
+        </table>
+    </fieldset>
+</form>
+</body>
+</html>
+
