@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout}"
+      lang="vi">
+<head>
+    <title>Không tìm thấy sản phẩm</title>
+</head>
+<body>
+<div layout:fragment="content">
+    <div class="card border-0 shadow-sm rounded-4 bg-white p-5 text-center my-4">
+        <h1 class="display-4 fw-bold text-danger mb-2">404</h1>
+        <h4 class="fw-semibold mb-3">Không tìm thấy sản phẩm yêu cầu</h4>
+        <p class="text-muted mb-4">Sản phẩm bạn đang tìm kiếm không tồn tại hoặc đã ngừng kinh doanh.</p>
+        <div>
+            <a th:href="@{/shop}" class="btn btn-add-cart px-4 py-2">
+                <i class="fa-solid fa-house me-2"></i>Quay về trang danh sách sản phẩm
+            </a>
+        </div>
+    </div>
+</div>
+</body>
+</html>
+

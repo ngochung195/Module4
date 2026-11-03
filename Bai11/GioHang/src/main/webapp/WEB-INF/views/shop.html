@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout}"
+      lang="vi">
+<head>
+    <title>Danh sách sản phẩm</title>
+</head>
+<body>
+<div layout:fragment="content">
+
+    <!-- Thông báo thêm vào giỏ thành công -->
+    <div th:if="${successMessage}" class="alert alert-success alert-dismissible fade show shadow-sm border-0 rounded-3 mb-4" role="alert">
+        <i class="fa-solid fa-circle-check me-2"></i>
+        <span th:text="${successMessage}"></span>
+        <a th:href="@{/shopping-cart}" class="alert-link ms-2">Xem giỏ hàng ngay &rarr;</a>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+
+    <!-- Header banner -->
+    <div class="p-4 mb-4 rounded-4 bg-white shadow-sm border-start border-5 border-danger d-flex flex-wrap justify-content-between align-items-center">
+        <div>
+            <h2 class="fw-bold mb-1">Bộ Sưu Tập Hoa Tươi Nổi Bật</h2>
+            <p class="text-muted mb-0">Click vào sản phẩm bất kỳ để xem trang chi tiết hoặc thêm nhanh vào giỏ hàng.</p>
+        </div>
+        <div class="mt-3 mt-md-0">
+            <span class="badge bg-danger-subtle text-danger px-3 py-2 rounded-pill fs-6">
+                <i class="fa-solid fa-truck-fast me-1"></i>Giao nhanh 2h miễn phí thiệp chúc mừng
+            </span>
+        </div>
+    </div>
+
+    <!-- Lưới danh sách sản phẩm (Bước 1) -->
+    <div class="row row-cols-1 row-cols-sm-2 row-cols-lg-3 g-4">
+        <div class="col" th:each="product : ${products}">
+            <div class="product-card">
+                <a th:href="@{/view/{id}(id=${product.id})}" class="product-img-wrapper d-block">
+                    <span class="code-badge" th:text="${product.code}">SP4101</span>
+                    <span class="sale-badge">SALE</span>
+                    <img th:src="${product.image}" th:alt="${product.name}">
+                </a>
+                <div class="card-body d-flex flex-column p-3">
+                    <a th:href="@{/view/{id}(id=${product.id})}"
+                       class="product-title"
+                       th:text="${product.name}">Tên sản phẩm</a>
+                    <p class="text-muted small mb-3 flex-grow-1"
+                       th:text="${product.description}"></p>
+                    <div class="mb-3">
+                        <span class="price-current"
+                              th:text="${#numbers.formatDecimal(product.price, 0, 'COMMA', 0, 'POINT') + ' đ'}">350,000 đ</span>
+                        <span class="price-old"
+                              th:if="${product.oldPrice > product.price}"
+                              th:text="${#numbers.formatDecimal(product.oldPrice, 0, 'COMMA', 0, 'POINT') + ' đ'}">420,000 đ</span>
+                    </div>
+                    <div class="d-flex gap-2">
+                        <a th:href="@{/view/{id}(id=${product.id})}"
+                           class="btn btn-outline-secondary btn-sm flex-fill rounded-3 py-2 fw-semibold">
+                            <i class="fa-regular fa-eye me-1"></i>Chi tiết
+                        </a>
+                        <a th:href="@{/add/{id}(id=${product.id})}"
+                           class="btn btn-add-cart btn-sm flex-fill py-2">
+                            <i class="fa-solid fa-cart-plus me-1"></i>Thêm vào giỏ
+                        </a>
+                        <a th:href="@{/add/{id}(id=${product.id}, action='show')}"
+                           class="btn btn-buy-now btn-sm py-2 px-3"
+                           title="Mua ngay">
+                            Mua ngay
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+</body>
+</html>
+

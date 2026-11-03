@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout}"
+      lang="vi">
+<head>
+    <title th:text="${product.name}">Chi tiết sản phẩm</title>
+</head>
+<body>
+<div layout:fragment="content">
+
+    <!-- Breadcrumb điều hướng -->
+    <nav aria-label="breadcrumb" class="mb-3">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a th:href="@{/shop}" class="text-decoration-none">Trang chủ</a></li>
+            <li class="breadcrumb-item"><a th:href="@{/shopping-cart}" class="text-decoration-none">Giỏ hàng</a></li>
+            <li class="breadcrumb-item active" aria-current="page" th:text="${product.name}">Chi tiết sản phẩm</li>
+        </ol>
+    </nav>
+
+    <!-- Khung chi tiết sản phẩm (Bước 2) -->
+    <div class="card border-0 shadow-sm rounded-4 overflow-hidden bg-white p-4">
+        <div class="row g-4 align-items-start">
+            <!-- Cột trái: Ảnh sản phẩm & Mô tả bên dưới -->
+            <div class="col-md-5">
+                <div class="rounded-4 overflow-hidden border shadow-sm mb-3">
+                    <img th:src="${product.image}" th:alt="${product.name}" class="img-fluid w-100" style="max-height: 430px; object-fit: cover;">
+                </div>
+                <div class="p-3 bg-light rounded-3 border">
+                    <h6 class="fw-bold text-secondary mb-2">
+                        <i class="fa-solid fa-circle-info me-1 text-primary"></i>Mô tả sản phẩm:
+                    </h6>
+                    <p class="mb-0 text-dark" th:text="${product.description}"></p>
+                </div>
+            </div>
+
+            <!-- Cột phải: Thông tin giá, mã SP, ưu đãi và nút Mua ngay -->
+            <div class="col-md-7">
+                <h2 class="fw-bold mb-2" th:text="${product.name}">Tên sản phẩm</h2>
+                <div class="mb-3">
+                    <span class="text-muted">Mã SP: </span>
+                    <strong class="text-primary fs-6" th:text="${product.code}">SP4101</strong>
+                    <span class="badge bg-success ms-2">Còn hàng</span>
+                </div>
+
+                <hr class="my-3">
+
+                <div class="mb-2" th:if="${product.oldPrice > product.price}">
+                    <span class="text-muted me-2">Giá gốc:</span>
+                    <span class="text-decoration-line-through text-secondary fs-5"
+                          th:text="${#numbers.formatDecimal(product.oldPrice, 0, 'COMMA', 0, 'POINT') + ' đ'}">420,000 đ</span>
+                </div>
+                <div class="mb-4">
+                    <span class="text-muted me-2">Giá bán ưu đãi:</span>
+                    <span class="fs-2 fw-bold text-danger"
+                          th:text="${#numbers.formatDecimal(product.price, 0, 'COMMA', 0, 'POINT') + ' đ'}">350,000 đ</span>
+                    <span class="small text-muted d-block mt-1">(Giá đã bao gồm 10% VAT)</span>
+                </div>
+
+                <!-- Khung khuyến mãi giống mô tả Bước 2 -->
+                <div class="promo-box mb-4">
+                    <h6 class="fw-bold text-success mb-2">
+                        <i class="fa-solid fa-gift me-2"></i>Ưu đãi đặc biệt khi đặt hàng:
+                    </h6>
+                    <ul class="mb-0 ps-3 small lh-lg">
+                        <li>Tặng banner, thiệp chúc mừng (trị giá 20.000đ) miễn phí</li>
+                        <li>Giảm ngay 20.000đ khi bạn tạo đơn hàng online</li>
+                        <li>Giảm tiếp 3% cho đơn hàng Bạn tạo ONLINE lần thứ 2, 5% cho đơn hàng lần thứ 6</li>
+                        <li>Giao gấp trong vòng 2 giờ nội thành</li>
+                    </ul>
+                </div>
+
+                <!-- Hotline hỗ trợ -->
+                <div class="mb-4 p-3 rounded-3 bg-success bg-opacity-10 border border-success-subtle d-flex align-items-center">
+                    <i class="fa-solid fa-phone-volume fs-4 text-success me-3"></i>
+                    <div>
+                        <span class="small text-muted d-block">Gọi đặt mua nhanh:</span>
+                        <strong class="text-success fs-5">1800 6353 - 090 123 4567</strong>
+                    </div>
+                </div>
+
+                <!-- Nút hành động -->
+                <div class="d-flex flex-wrap gap-3">
+                    <a th:href="@{/add/{id}(id=${product.id}, action='show')}"
+                       class="btn btn-buy-now btn-lg px-4 py-2 shadow-sm">
+                        <i class="fa-solid fa-bolt me-2"></i>Mua ngay
+                    </a>
+                    <a th:href="@{/add/{id}(id=${product.id})}"
+                       class="btn btn-add-cart btn-lg px-4 py-2 shadow-sm">
+                        <i class="fa-solid fa-cart-plus me-2"></i>Thêm vào giỏ hàng
+                    </a>
+                    <a th:href="@{/shop}"
+                       class="btn btn-outline-secondary btn-lg px-4 py-2">
+                        <i class="fa-solid fa-arrow-left me-2"></i>Tiếp tục mua hàng
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+</body>
+</html>
+
