@@ -2,7 +2,7 @@ package com.codegym.blogmanagementjpa.model;
 
 import java.time.LocalDateTime;
 
-import org.hibernate.annotations.ManyToAny;
+import com.fasterxml.jackson.annotation.JsonFormat;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -26,6 +26,8 @@ public class Blog {
 
     @Column(columnDefinition = "TEXT")
     private String content;
+
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime createdAt;
 
     public Blog() {

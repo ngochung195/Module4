@@ -46,4 +46,13 @@ public class BlogRepository implements IBlogRepository {
             entityManager.remove(blog);
         }
     }
+
+    @Override
+    public List<Blog> findByCategoryId(Long categoryId) {
+        TypedQuery<Blog> query = entityManager.createQuery(
+                "SELECT b FROM Blog b WHERE b.category.id = :categoryId ORDER BY b.createdAt DESC",
+                Blog.class);
+        query.setParameter("categoryId", categoryId);
+        return query.getResultList();
+    }
 }

@@ -30,4 +30,9 @@ public class BlogService implements IBlogService {
     public void remove(Long id) {
         blogRepository.remove(id);
     }
+
+    @Override
+    public List<Blog> findByCategoryId(Long categoryId) {
+        return blogRepository.findByCategoryId(categoryId);
+    }
 }
