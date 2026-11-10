@@ -1,0 +1,40 @@
+plugins {
+    id 'java'
+    id 'war'
+}
+
+group = 'com.codegym'
+version = '1.0-SNAPSHOT'
+
+repositories {
+    mavenCentral()
+}
+
+java {
+    sourceCompatibility = JavaVersion.VERSION_17
+    targetCompatibility = JavaVersion.VERSION_17
+}
+
+tasks.withType(JavaCompile).configureEach {
+    options.encoding = 'UTF-8'
+    options.compilerArgs.add('-parameters')
+}
+
+dependencies {
+    compileOnly 'jakarta.servlet:jakarta.servlet-api:6.0.0'
+
+    implementation 'org.springframework:spring-webmvc:6.0.13'
+    implementation 'org.springframework:spring-orm:6.0.13'
+    implementation 'org.springframework:spring-tx:6.0.13'
+
+    implementation 'org.hibernate.orm:hibernate-core:6.2.7.Final'
+    implementation 'com.mysql:mysql-connector-j:8.0.33'
+
+    implementation 'org.springframework.data:spring-data-jpa:3.4.2'
+    implementation 'com.fasterxml.jackson.core:jackson-databind:2.15.2'
+}
+
+war {
+    archiveFileName = 'phone-management-ajax-web-service.war'
+}
+
