@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" th:lang="${#locale.language}">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title th:text="#{app.title}">Customer Management</title>
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+            background: #f4f6f9;
+            color: #1e293b;
+            padding: 32px 16px;
+        }
+        .container {
+            max-width: 960px;
+            margin: 0 auto;
+            background: #ffffff;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
+            overflow: hidden;
+        }
+        .header {
+            background: linear-gradient(135deg, #2563eb, #1d4ed8);
+            color: #ffffff;
+            padding: 24px 32px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 16px;
+        }
+        .header h1 { font-size: 1.5rem; margin-bottom: 4px; }
+        .header p { font-size: 0.9rem; opacity: 0.9; }
+        .lang-switcher {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(255, 255, 255, 0.15);
+            padding: 6px 12px;
+            border-radius: 8px;
+            font-size: 0.875rem;
+        }
+        .lang-switcher a {
+            color: #ffffff;
+            text-decoration: none;
+            padding: 4px 10px;
+            border-radius: 6px;
+            font-weight: 500;
+            transition: background 0.2s;
+        }
+        .lang-switcher a:hover, .lang-switcher a.active {
+            background: #ffffff;
+            color: #1d4ed8;
+        }
+        .content { padding: 28px 32px; }
+        .toolbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        .toolbar h2 { font-size: 1.25rem; color: #0f172a; }
+        .btn {
+            display: inline-block;
+            padding: 9px 16px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.875rem;
+            border: none;
+            cursor: pointer;
+            transition: opacity 0.2s;
+        }
+        .btn:hover { opacity: 0.9; }
+        .btn-primary { background: #2563eb; color: #ffffff; }
+        .btn-edit { background: #0ea5e9; color: #ffffff; padding: 6px 12px; margin-right: 6px; }
+        .btn-delete { background: #ef4444; color: #ffffff; padding: 6px 12px; }
+        .alert-success {
+            background: #dcfce7;
+            color: #166534;
+            border: 1px solid #bbf7d0;
+            padding: 12px 16px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            font-weight: 500;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+        th, td {
+            padding: 12px 16px;
+            text-align: left;
+            border-bottom: 1px solid #e2e8f0;
+        }
+        th {
+            background: #f8fafc;
+            font-weight: 600;
+            color: #475569;
+            font-size: 0.875rem;
+            text-transform: uppercase;
+            letter-spacing: 0.03em;
+        }
+        tr:hover td { background: #f8fafc; }
+        .empty-state {
+            text-align: center;
+            padding: 32px;
+            color: #64748b;
+            font-style: italic;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="header">
+        <div>
+            <h1 th:text="#{app.title}">Customer Management System</h1>
+            <p th:text="#{app.subtitle}">Manage customer profiles with multi-language support</p>
+        </div>
+        <div class="lang-switcher">
+            <span th:text="#{language.label}">Language:</span>
+            <a th:href="@{/customers(lang='en')}"
+               th:classappend="${#locale.language == 'en'} ? 'active' : ''"
+               th:text="#{language.en}">English</a>
+            <a th:href="@{/customers(lang='vi')}"
+               th:classappend="${#locale.language == 'vi'} ? 'active' : ''"
+               th:text="#{language.vi}">Tiếng Việt</a>
+            <a th:href="@{/customers(lang='ja')}"
+               th:classappend="${#locale.language == 'ja'} ? 'active' : ''"
+               th:text="#{language.ja}">日本語</a>
+        </div>
+    </div>
+
+    <div class="content">
+        <div th:if="${successMessageKey}" class="alert-success" th:text="#{__${successMessageKey}__}"></div>
+
+        <div class="toolbar">
+            <h2 th:text="#{customer.list.title}">Customer List</h2>
+            <a th:href="@{/customers/create}" class="btn btn-primary" th:text="#{customer.btn.create}">Add New Customer</a>
+        </div>
+
+        <table>
+            <thead>
+            <tr>
+                <th th:text="#{customer.field.id}">ID</th>
+                <th th:text="#{customer.field.firstName}">First Name</th>
+                <th th:text="#{customer.field.lastName}">Last Name</th>
+                <th th:text="#{customer.field.email}">Email</th>
+                <th th:text="#{customer.field.actions}">Actions</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="c : ${customers}">
+                <td th:text="${c.id}">1</td>
+                <td th:text="${c.firstName}">Nguyen</td>
+                <td th:text="${c.lastName}">Van A</td>
+                <td th:text="${c.email}">a@codegym.vn</td>
+                <td>
+                    <a th:href="@{/customers/edit/{id}(id=${c.id})}" class="btn btn-edit" th:text="#{customer.action.edit}">Edit</a>
+                    <a th:href="@{/customers/delete/{id}(id=${c.id})}" class="btn btn-delete" th:text="#{customer.action.delete}">Delete</a>
+                </td>
+            </tr>
+            <tr th:if="${#lists.isEmpty(customers)}">
+                <td colspan="5" class="empty-state" th:text="#{customer.list.empty}">No customers found.</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+</body>
+</html>
+

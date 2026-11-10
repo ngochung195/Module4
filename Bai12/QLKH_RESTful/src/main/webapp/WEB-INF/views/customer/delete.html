@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" th:lang="${#locale.language}">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title th:text="#{customer.delete.title}">Delete Customer</title>
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+            background: #f4f6f9;
+            color: #1e293b;
+            padding: 32px 16px;
+        }
+        .container {
+            max-width: 640px;
+            margin: 0 auto;
+            background: #ffffff;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
+            overflow: hidden;
+        }
+        .header {
+            background: linear-gradient(135deg, #ef4444, #dc2626);
+            color: #ffffff;
+            padding: 20px 28px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+        .header h1 { font-size: 1.35rem; }
+        .lang-switcher {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            background: rgba(255, 255, 255, 0.15);
+            padding: 5px 10px;
+            border-radius: 8px;
+            font-size: 0.85rem;
+        }
+        .lang-switcher a {
+            color: #ffffff;
+            text-decoration: none;
+            padding: 3px 8px;
+            border-radius: 5px;
+            font-weight: 500;
+        }
+        .lang-switcher a:hover, .lang-switcher a.active {
+            background: #ffffff;
+            color: #dc2626;
+        }
+        .content { padding: 28px; }
+        .confirm-box {
+            background: #fef2f2;
+            border: 1px solid #fecaca;
+            color: #991b1b;
+            padding: 14px 16px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            font-weight: 500;
+        }
+        .info-row {
+            display: flex;
+            padding: 10px 0;
+            border-bottom: 1px solid #e2e8f0;
+        }
+        .info-label {
+            width: 160px;
+            font-weight: 600;
+            color: #475569;
+        }
+        .actions {
+            display: flex;
+            gap: 12px;
+            margin-top: 24px;
+        }
+        .btn {
+            padding: 10px 18px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.9rem;
+            border: none;
+            cursor: pointer;
+        }
+        .btn-danger { background: #dc2626; color: #ffffff; }
+        .btn-secondary { background: #e2e8f0; color: #334155; }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="header">
+        <h1 th:text="#{customer.delete.title}">Delete Customer</h1>
+        <div class="lang-switcher">
+            <span th:text="#{language.label}">Language:</span>
+            <a th:href="@{/customers/delete/{id}(id=${customer.id},lang='en')}"
+               th:classappend="${#locale.language == 'en'} ? 'active' : ''"
+               th:text="#{language.en}">English</a>
+            <a th:href="@{/customers/delete/{id}(id=${customer.id},lang='vi')}"
+               th:classappend="${#locale.language == 'vi'} ? 'active' : ''"
+               th:text="#{language.vi}">Tiếng Việt</a>
+            <a th:href="@{/customers/delete/{id}(id=${customer.id},lang='ja')}"
+               th:classappend="${#locale.language == 'ja'} ? 'active' : ''"
+               th:text="#{language.ja}">日本語</a>
+        </div>
+    </div>
+
+    <div class="content">
+        <div class="confirm-box" th:text="#{customer.delete.confirm}">Are you sure?</div>
+
+        <form th:action="@{/customers/delete}" th:object="${customer}" method="post">
+            <input type="hidden" th:field="*{id}">
+            <div class="info-row">
+                <div class="info-label" th:text="#{customer.field.id}">ID</div>
+                <div th:text="${customer.id}"></div>
+            </div>
+            <div class="info-row">
+                <div class="info-label" th:text="#{customer.field.firstName}">First Name</div>
+                <div th:text="${customer.firstName}"></div>
+            </div>
+            <div class="info-row">
+                <div class="info-label" th:text="#{customer.field.lastName}">Last Name</div>
+                <div th:text="${customer.lastName}"></div>
+            </div>
+            <div class="info-row">
+                <div class="info-label" th:text="#{customer.field.email}">Email</div>
+                <div th:text="${customer.email}"></div>
+            </div>
+            <div class="actions">
+                <button type="submit" class="btn btn-danger" th:text="#{customer.btn.delete}">Delete</button>
+                <a th:href="@{/customers}" class="btn btn-secondary" th:text="#{customer.btn.cancel}">Cancel</a>
+            </div>
+        </form>
+    </div>
+</div>
+</body>
+</html>
+

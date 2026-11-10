@@ -37,6 +37,7 @@ dependencies {
     implementation 'org.springframework.data:spring-data-jpa:3.4.2'
 
     implementation 'com.fasterxml.jackson.core:jackson-databind:2.15.2'
+    implementation 'org.thymeleaf:thymeleaf-spring6:3.1.1.RELEASE'
 }
 
 war {

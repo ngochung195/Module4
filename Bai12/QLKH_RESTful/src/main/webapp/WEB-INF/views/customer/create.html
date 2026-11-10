@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" th:lang="${#locale.language}">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title th:text="#{customer.create.title}">Create Customer</title>
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+            background: #f4f6f9;
+            color: #1e293b;
+            padding: 32px 16px;
+        }
+        .container {
+            max-width: 640px;
+            margin: 0 auto;
+            background: #ffffff;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
+            overflow: hidden;
+        }
+        .header {
+            background: linear-gradient(135deg, #2563eb, #1d4ed8);
+            color: #ffffff;
+            padding: 20px 28px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+        .header h1 { font-size: 1.35rem; }
+        .lang-switcher {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            background: rgba(255, 255, 255, 0.15);
+            padding: 5px 10px;
+            border-radius: 8px;
+            font-size: 0.85rem;
+        }
+        .lang-switcher a {
+            color: #ffffff;
+            text-decoration: none;
+            padding: 3px 8px;
+            border-radius: 5px;
+            font-weight: 500;
+        }
+        .lang-switcher a:hover, .lang-switcher a.active {
+            background: #ffffff;
+            color: #1d4ed8;
+        }
+        .content { padding: 28px; }
+        .form-group { margin-bottom: 18px; }
+        label {
+            display: block;
+            font-weight: 600;
+            margin-bottom: 6px;
+            color: #334155;
+        }
+        input[type="text"], input[type="email"] {
+            width: 100%;
+            padding: 10px 14px;
+            border: 1px solid #cbd5e1;
+            border-radius: 8px;
+            font-size: 0.95rem;
+        }
+        .actions {
+            display: flex;
+            gap: 12px;
+            margin-top: 24px;
+        }
+        .btn {
+            padding: 10px 18px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.9rem;
+            border: none;
+            cursor: pointer;
+        }
+        .btn-primary { background: #2563eb; color: #ffffff; }
+        .btn-secondary { background: #e2e8f0; color: #334155; }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="header">
+        <h1 th:text="#{customer.create.title}">Create New Customer</h1>
+        <div class="lang-switcher">
+            <span th:text="#{language.label}">Language:</span>
+            <a th:href="@{/customers/create(lang='en')}"
+               th:classappend="${#locale.language == 'en'} ? 'active' : ''"
+               th:text="#{language.en}">English</a>
+            <a th:href="@{/customers/create(lang='vi')}"
+               th:classappend="${#locale.language == 'vi'} ? 'active' : ''"
+               th:text="#{language.vi}">Tiếng Việt</a>
+            <a th:href="@{/customers/create(lang='ja')}"
+               th:classappend="${#locale.language == 'ja'} ? 'active' : ''"
+               th:text="#{language.ja}">日本語</a>
+        </div>
+    </div>
+
+    <div class="content">
+        <form th:action="@{/customers/create}" th:object="${customer}" method="post">
+            <div class="form-group">
+                <label for="firstName" th:text="#{customer.field.firstName}">First Name</label>
+                <input type="text" id="firstName" th:field="*{firstName}" th:placeholder="#{customer.placeholder.firstName}" required>
+            </div>
+            <div class="form-group">
+                <label for="lastName" th:text="#{customer.field.lastName}">Last Name</label>
+                <input type="text" id="lastName" th:field="*{lastName}" th:placeholder="#{customer.placeholder.lastName}" required>
+            </div>
+            <div class="form-group">
+                <label for="email" th:text="#{customer.field.email}">Email</label>
+                <input type="email" id="email" th:field="*{email}" th:placeholder="#{customer.placeholder.email}" required>
+            </div>
+            <div class="actions">
+                <button type="submit" class="btn btn-primary" th:text="#{customer.btn.save}">Save</button>
+                <a th:href="@{/customers}" class="btn btn-secondary" th:text="#{customer.btn.back}">Back</a>
+            </div>
+        </form>
+    </div>
+</div>
+</body>
+</html>
+
