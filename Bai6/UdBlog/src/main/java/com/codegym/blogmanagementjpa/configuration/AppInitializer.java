@@ -1,5 +1,6 @@
 package com.codegym.blogmanagementjpa.configuration;
 
+import com.codegym.blogmanagementjpa.security.WebSecurityConfig;
 import jakarta.servlet.Filter;
 import org.springframework.web.filter.CharacterEncodingFilter;
 import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatcherServletInitializer;
@@ -8,7 +9,7 @@ public class AppInitializer extends AbstractAnnotationConfigDispatcherServletIni
 
     @Override
     protected Class<?>[] getRootConfigClasses() {
-        return new Class<?>[]{AppConfiguration.class};
+        return new Class<?>[]{AppConfiguration.class, WebSecurityConfig.class};
     }
 
     @Override

@@ -12,6 +12,7 @@ repositories {
 
 ext {
     springVersion = '6.1.14'
+    springSecurityVersion = '6.3.4'
     hibernateVersion = '6.5.3.Final'
 }
 
@@ -37,6 +38,12 @@ dependencies {
     // Jackson để chuyển đổi Object sang JSON cho RESTful API
     implementation 'com.fasterxml.jackson.core:jackson-databind:2.17.2'
     implementation 'com.fasterxml.jackson.datatype:jackson-datatype-jsr310:2.17.2'
+
+    // Spring Security 6 & Thymeleaf Extras Spring Security 6
+    implementation "org.springframework.security:spring-security-web:${springSecurityVersion}"
+    implementation "org.springframework.security:spring-security-config:${springSecurityVersion}"
+    implementation "org.springframework.security:spring-security-taglibs:${springSecurityVersion}"
+    implementation 'org.thymeleaf.extras:thymeleaf-extras-springsecurity6:3.1.2.RELEASE'
 }
 
 tasks.withType(JavaCompile).configureEach {

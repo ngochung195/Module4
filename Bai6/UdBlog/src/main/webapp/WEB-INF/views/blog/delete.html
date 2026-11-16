@@ -1,5 +1,7 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" lang="vi">
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+      lang="vi">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -12,8 +14,11 @@
     <div class="row justify-content-center">
         <div class="col-md-6">
             <div class="card shadow border-danger">
-                <div class="card-header bg-danger text-white py-3">
+                <div class="card-header bg-danger text-white py-3 d-flex justify-content-between align-items-center">
                     <h5 class="mb-0"><i class="bi bi-exclamation-triangle-fill me-2"></i>Xác nhận xóa bài viết</h5>
+                    <span sec:authorize="isAuthenticated()" class="small">
+                        <i class="bi bi-person-circle me-1"></i><span sec:authentication="principal.username">user</span>
+                    </span>
                 </div>
                 <div class="card-body p-4 text-center">
                     <p class="fs-5 text-muted mb-3">Bạn có chắc chắn muốn xóa vĩnh viễn bài viết này không?</p>
