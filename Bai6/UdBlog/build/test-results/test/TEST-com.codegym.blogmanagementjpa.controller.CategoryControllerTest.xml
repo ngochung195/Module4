@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.codegym.blogmanagementjpa.controller.CategoryControllerTest" tests="5" skipped="0" failures="0" errors="0" timestamp="2026-11-25T09:39:16.974Z" hostname="DESKTOP-9KOQS32" time="0.042">
+  <properties/>
+  <testcase name="1. Kiểm thử hiển thị danh sách danh mục (GET /categories)" classname="com.codegym.blogmanagementjpa.controller.CategoryControllerTest" time="0.006"/>
+  <testcase name="5. Kiểm thử cập nhật và xóa danh mục" classname="com.codegym.blogmanagementjpa.controller.CategoryControllerTest" time="0.009"/>
+  <testcase name="3. Kiểm thử lưu danh mục mới (POST /categories/save)" classname="com.codegym.blogmanagementjpa.controller.CategoryControllerTest" time="0.007"/>
+  <testcase name="2. Kiểm thử hiển thị form tạo danh mục (GET /categories/create)" classname="com.codegym.blogmanagementjpa.controller.CategoryControllerTest" time="0.007"/>
+  <testcase name="4. Kiểm thử hiển thị form sửa danh mục (GET /categories/{id}/edit)" classname="com.codegym.blogmanagementjpa.controller.CategoryControllerTest" time="0.009"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

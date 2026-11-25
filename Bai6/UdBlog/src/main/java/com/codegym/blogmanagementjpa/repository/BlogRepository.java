@@ -2,6 +2,9 @@ package com.codegym.blogmanagementjpa.repository;
 
 import java.util.List;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -23,6 +26,48 @@ public class BlogRepository implements IBlogRepository {
         TypedQuery<Blog> query = entityManager.createQuery("SELECT b FROM Blog b ORDER BY b.createdAt DESC",
                 Blog.class);
         return query.getResultList();
+    }
+
+    @Override
+    public Page<Blog> findAll(Pageable pageable) {
+        TypedQuery<Blog> query = entityManager.createQuery("SELECT b FROM Blog b ORDER BY b.createdAt DESC",
+                Blog.class);
+        query.setFirstResult((int) pageable.getOffset());
+        query.setMaxResults(pageable.getPageSize());
+        List<Blog> blogs = query.getResultList();
+
+        TypedQuery<Long> countQuery = entityManager.createQuery("SELECT COUNT(b) FROM Blog b", Long.class);
+        long total = countQuery.getSingleResult();
+
+        return new PageImpl<>(blogs, pageable, total);
+    }
+
+    @Override
+    public List<Blog> searchByTitle(String keyword) {
+        TypedQuery<Blog> query = entityManager.createQuery(
+                "SELECT b FROM Blog b WHERE LOWER(b.title) LIKE LOWER(:keyword) ORDER BY b.createdAt DESC",
+                Blog.class);
+        query.setParameter("keyword", "%" + (keyword == null ? "" : keyword.trim()) + "%");
+        return query.getResultList();
+    }
+
+    @Override
+    public Page<Blog> findAllByTitleContaining(String keyword, Pageable pageable) {
+        String pattern = "%" + (keyword == null ? "" : keyword.trim()) + "%";
+        TypedQuery<Blog> query = entityManager.createQuery(
+                "SELECT b FROM Blog b WHERE LOWER(b.title) LIKE LOWER(:keyword) ORDER BY b.createdAt DESC",
+                Blog.class);
+        query.setParameter("keyword", pattern);
+        query.setFirstResult((int) pageable.getOffset());
+        query.setMaxResults(pageable.getPageSize());
+        List<Blog> blogs = query.getResultList();
+
+        TypedQuery<Long> countQuery = entityManager.createQuery(
+                "SELECT COUNT(b) FROM Blog b WHERE LOWER(b.title) LIKE LOWER(:keyword)", Long.class);
+        countQuery.setParameter("keyword", pattern);
+        long total = countQuery.getSingleResult();
+
+        return new PageImpl<>(blogs, pageable, total);
     }
 
     @Override

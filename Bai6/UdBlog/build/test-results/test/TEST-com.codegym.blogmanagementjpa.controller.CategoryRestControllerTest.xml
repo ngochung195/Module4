@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.codegym.blogmanagementjpa.controller.CategoryRestControllerTest" tests="2" skipped="0" failures="0" errors="0" timestamp="2026-11-25T09:39:17.020Z" hostname="DESKTOP-9KOQS32" time="0.015">
+  <properties/>
+  <testcase name="2. Kiểm thử REST API lấy danh sách bài viết của một category (GET /api/categories/{id}/blogs)" classname="com.codegym.blogmanagementjpa.controller.CategoryRestControllerTest" time="0.008"/>
+  <testcase name="1. Kiểm thử REST API lấy danh sách category (GET /api/categories)" classname="com.codegym.blogmanagementjpa.controller.CategoryRestControllerTest" time="0.007"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

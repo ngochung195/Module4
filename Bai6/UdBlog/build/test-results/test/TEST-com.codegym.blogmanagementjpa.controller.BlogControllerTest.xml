@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.codegym.blogmanagementjpa.controller.BlogControllerTest" tests="10" skipped="0" failures="0" errors="0" timestamp="2026-11-25T09:39:16.533Z" hostname="DESKTOP-9KOQS32" time="0.31">
+  <properties/>
+  <testcase name="4. Kiểm thử xem chi tiết bài viết tồn tại (GET /blogs/{id}/view)" classname="com.codegym.blogmanagementjpa.controller.BlogControllerTest" time="0.172"/>
+  <testcase name="7. Kiểm thử lưu bài viết mới (POST /blogs/save)" classname="com.codegym.blogmanagementjpa.controller.BlogControllerTest" time="0.03"/>
+  <testcase name="3. Kiểm thử tìm kiếm bài viết theo từ khóa (GET /blogs/search?search=Spring)" classname="com.codegym.blogmanagementjpa.controller.BlogControllerTest" time="0.02"/>
+  <testcase name="9. Kiểm thử cập nhật bài viết (POST /blogs/update)" classname="com.codegym.blogmanagementjpa.controller.BlogControllerTest" time="0.015"/>
+  <testcase name="1. Kiểm thử lấy danh sách bài viết (GET /blogs)" classname="com.codegym.blogmanagementjpa.controller.BlogControllerTest" time="0.011"/>
+  <testcase name="10. Kiểm thử hiển thị xác nhận xóa và thực hiện xóa bài viết" classname="com.codegym.blogmanagementjpa.controller.BlogControllerTest" time="0.013"/>
+  <testcase name="2. Kiểm thử lấy danh sách bài viết có phân trang (GET /blogs/page)" classname="com.codegym.blogmanagementjpa.controller.BlogControllerTest" time="0.013"/>
+  <testcase name="5. Kiểm thử xem chi tiết bài viết không tồn tại chuyển hướng về /blogs" classname="com.codegym.blogmanagementjpa.controller.BlogControllerTest" time="0.009"/>
+  <testcase name="6. Kiểm thử hiển thị form thêm bài viết mới (GET /blogs/create)" classname="com.codegym.blogmanagementjpa.controller.BlogControllerTest" time="0.008"/>
+  <testcase name="8. Kiểm thử hiển thị form chỉnh sửa bài viết (GET /blogs/{id}/edit)" classname="com.codegym.blogmanagementjpa.controller.BlogControllerTest" time="0.009"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[SLF4J(W): No SLF4J providers were found.
+SLF4J(W): Defaulting to no-operation (NOP) logger implementation
+SLF4J(W): See https://www.slf4j.org/codes.html#noProviders for further details.
+]]></system-err>
+</testsuite>

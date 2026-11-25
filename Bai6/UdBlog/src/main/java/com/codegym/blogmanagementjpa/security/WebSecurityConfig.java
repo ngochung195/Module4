@@ -37,6 +37,8 @@ public class WebSecurityConfig {
                 .requestMatchers(
                         new AntPathRequestMatcher("/"),
                         new AntPathRequestMatcher("/blogs", "GET"),
+                        new AntPathRequestMatcher("/blogs/page", "GET"),
+                        new AntPathRequestMatcher("/blogs/search", "GET"),
                         new AntPathRequestMatcher("/blogs/*/view", "GET"),
                         new AntPathRequestMatcher("/api/**", "GET")
                 ).permitAll()

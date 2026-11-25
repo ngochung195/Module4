@@ -3,9 +3,14 @@ package com.codegym.blogmanagementjpa.service;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.stereotype.Service;
+
 import com.codegym.blogmanagementjpa.model.Blog;
 import com.codegym.blogmanagementjpa.repository.IBlogRepository;
 
+@Service
 public class BlogService implements IBlogService {
 
     @Autowired
@@ -14,6 +19,21 @@ public class BlogService implements IBlogService {
     @Override
     public List<Blog> findAll() {
         return blogRepository.findAll();
+    }
+
+    @Override
+    public Page<Blog> findAll(Pageable pageable) {
+        return blogRepository.findAll(pageable);
+    }
+
+    @Override
+    public List<Blog> searchByTitle(String keyword) {
+        return blogRepository.searchByTitle(keyword);
+    }
+
+    @Override
+    public Page<Blog> findAllByTitleContaining(String keyword, Pageable pageable) {
+        return blogRepository.findAllByTitleContaining(keyword, pageable);
     }
 
     @Override
