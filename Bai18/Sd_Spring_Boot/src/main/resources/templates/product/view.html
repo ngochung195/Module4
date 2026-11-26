@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="vi" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chi tiết sản phẩm</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+<nav class="navbar">
+    <div class="navbar-inner">
+        <a class="navbar-brand" th:href="@{/products}">Quản Lý Sản Phẩm</a>
+        <a class="btn btn-secondary btn-sm" th:href="@{/products}">← Quay lại danh sách</a>
+    </div>
+</nav>
+
+<main class="container">
+    <div class="card form-container">
+        <div class="card-header">
+            <h1 class="card-title">Chi tiết sản phẩm</h1>
+        </div>
+
+        <div class="detail-list">
+            <div class="detail-label">ID:</div>
+            <div class="detail-value" th:text="${product.id}"></div>
+
+            <div class="detail-label">Tên sản phẩm:</div>
+            <div class="detail-value"><strong th:text="${product.name}"></strong></div>
+
+            <div class="detail-label">Giá sản phẩm:</div>
+            <div class="detail-value price-cell"
+                 th:text="${#numbers.formatDecimal(product.price, 0, 'COMMA', 0, 'POINT')} + ' VNĐ'"></div>
+
+            <div class="detail-label">Nhà sản xuất:</div>
+            <div class="detail-value" th:text="${product.manufacturer}"></div>
+
+            <div class="detail-label">Mô tả:</div>
+            <div class="detail-value" th:text="${product.description}"></div>
+        </div>
+
+        <div class="form-actions">
+            <a class="btn btn-warning" th:href="@{/products/edit/{id}(id=${product.id})}">Chỉnh sửa</a>
+            <a class="btn btn-danger" th:href="@{/products/delete/{id}(id=${product.id})}">Xoá</a>
+            <a class="btn btn-secondary" th:href="@{/products}">Quay lại danh sách</a>
+        </div>
+    </div>
+</main>
+</body>
+</html>

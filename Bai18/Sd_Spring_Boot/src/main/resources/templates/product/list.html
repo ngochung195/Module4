@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="vi" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quản lý sản phẩm</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+<nav class="navbar">
+    <div class="navbar-inner">
+        <a class="navbar-brand" th:href="@{/products}">Quản Lý Sản Phẩm</a>
+        <a class="btn btn-secondary btn-sm" th:href="@{/products/create}">+ Thêm sản phẩm</a>
+    </div>
+</nav>
+
+<main class="container">
+    <div class="card">
+        <div class="card-header">
+            <h1 class="card-title">Danh sách sản phẩm</h1>
+            <a class="btn btn-primary" th:href="@{/products/create}">+ Tạo sản phẩm mới</a>
+        </div>
+
+        <div th:if="${message}" class="alert alert-success" th:text="${message}"></div>
+        <div th:if="${error}" class="alert alert-danger" th:text="${error}"></div>
+
+        <div class="toolbar">
+            <form class="search-form" th:action="@{/products}" method="get">
+                <input type="text" name="keyword" class="form-control"
+                       placeholder="Tìm kiếm theo tên sản phẩm..." th:value="${keyword}">
+                <button type="submit" class="btn btn-primary">Tìm</button>
+                <a th:if="${keyword != null and !keyword.isEmpty()}" th:href="@{/products}" class="btn btn-secondary">Xoá lọc</a>
+            </form>
+        </div>
+
+        <div class="table-wrapper">
+            <table th:if="${products != null and !#lists.isEmpty(products)}">
+                <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Tên sản phẩm</th>
+                    <th>Giá sản phẩm</th>
+                    <th>Mô tả</th>
+                    <th>Nhà sản xuất</th>
+                    <th>Thao tác</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="product : ${products}">
+                    <td th:text="${product.id}">1</td>
+                    <td>
+                        <strong th:text="${product.name}">Tên sản phẩm</strong>
+                    </td>
+                    <td class="price-cell"
+                        th:text="${#numbers.formatDecimal(product.price, 0, 'COMMA', 0, 'POINT')} + ' VNĐ'">
+                        0 VNĐ
+                    </td>
+                    <td class="desc-cell" th:text="${product.description}">Mô tả</td>
+                    <td th:text="${product.manufacturer}">Nhà sản xuất</td>
+                    <td class="actions-cell">
+                        <a class="btn btn-info btn-sm" th:href="@{/products/view/{id}(id=${product.id})}">Xem</a>
+                        <a class="btn btn-warning btn-sm" th:href="@{/products/edit/{id}(id=${product.id})}">Sửa</a>
+                        <a class="btn btn-danger btn-sm" th:href="@{/products/delete/{id}(id=${product.id})}">Xoá</a>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+
+            <div class="empty-state" th:if="${products == null or #lists.isEmpty(products)}">
+                <p>Chưa có sản phẩm nào. Hãy nhấn <strong>Tạo sản phẩm mới</strong> để bắt đầu!</p>
+            </div>
+        </div>
+    </div>
+</main>
+</body>
+</html>
