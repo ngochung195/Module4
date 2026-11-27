@@ -1,0 +1,13 @@
+com\codegym\weather\model\AppUser.class
+com\codegym\weather\security\SecurityConfig.class
+com\codegym\weather\repository\WeatherRepository.class
+com\codegym\weather\service\WeatherService.class
+com\codegym\weather\config\DataInitializer.class
+com\codegym\weather\exception\GlobalExceptionHandler.class
+com\codegym\weather\security\CustomUserDetailsService.class
+com\codegym\weather\repository\UserRepository.class
+com\codegym\weather\WeatherServiceApplication.class
+com\codegym\weather\model\Weather.class
+com\codegym\weather\controller\WeatherController.class
+com\codegym\weather\security\PathAuthenticationFilter.class
+com\codegym\weather\exception\LocationNotFoundException.class
